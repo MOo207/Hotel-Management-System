@@ -10,6 +10,7 @@ import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
+import myapp.check_in.Check_In;
 
 /**
  *
@@ -333,6 +334,7 @@ public class Main_Frame extends javax.swing.JFrame {
 
     private void new_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_new_btnActionPerformed
         // TODO add your handling code here:
+        new Check_In().setVisible(true);
     }//GEN-LAST:event_new_btnActionPerformed
 
     private void new_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_new_btnMouseExited

@@ -5,6 +5,8 @@
  */
 package myapp.check_in;
 
+import java.awt.Color;
+
 /**
  *
  * @author Mohammed Al 3mawy
@@ -16,7 +18,7 @@ public class Check_In extends javax.swing.JFrame {
      */
     public Check_In() {
         initComponents();
-    }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,21 +29,433 @@ public class Check_In extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel3 = new javax.swing.JLabel();
+        userName_Txt = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        password_Txt = new javax.swing.JPasswordField();
+        jSep1 = new javax.swing.JSeparator();
+        jSep2 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        userName_Txt1 = new javax.swing.JTextField();
+        jSep3 = new javax.swing.JSeparator();
+        login_Btn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        userName_Txt2 = new javax.swing.JTextField();
+        jSep5 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        password_Txt2 = new javax.swing.JPasswordField();
+        jSep6 = new javax.swing.JSeparator();
+
+        jLabel3.setForeground(new java.awt.Color(90, 91, 97));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/User-icon.png"))); // NOI18N
+        jLabel3.setText("Username");
+
+        userName_Txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        userName_Txt.setBorder(null);
+        userName_Txt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                userName_TxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                userName_TxtMouseExited(evt);
+            }
+        });
+
+        jLabel4.setForeground(new java.awt.Color(90, 91, 97));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/Security-Password-2-icon.png"))); // NOI18N
+        jLabel4.setText("Password");
+
+        password_Txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        password_Txt.setBorder(null);
+        password_Txt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                password_TxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                password_TxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                password_TxtMouseExited(evt);
+            }
+        });
+
+        jSep1.setBackground(new java.awt.Color(204, 204, 204));
+        jSep1.setForeground(new java.awt.Color(204, 204, 204));
+        jSep1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jSep1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSep1MouseExited(evt);
+            }
+        });
+
+        jSep2.setBackground(new java.awt.Color(204, 204, 204));
+        jSep2.setForeground(new java.awt.Color(204, 204, 204));
+        jSep2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jSep2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSep2MouseExited(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(40, 120, 200), null));
+
+        jPanel5.setBackground(new java.awt.Color(40, 120, 200));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("X");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Check IN");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)))
+        );
+
+        jLabel6.setForeground(new java.awt.Color(90, 91, 97));
+        jLabel6.setText("Username");
+
+        userName_Txt1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        userName_Txt1.setBorder(null);
+        userName_Txt1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                userName_Txt1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                userName_Txt1MouseExited(evt);
+            }
+        });
+
+        jSep3.setBackground(new java.awt.Color(204, 204, 204));
+        jSep3.setForeground(new java.awt.Color(204, 204, 204));
+        jSep3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jSep3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSep3MouseExited(evt);
+            }
+        });
+
+        login_Btn.setBackground(new java.awt.Color(40, 120, 200));
+        login_Btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        login_Btn.setForeground(new java.awt.Color(255, 255, 255));
+        login_Btn.setText("Check In");
+        login_Btn.setToolTipText("Login");
+        login_Btn.setBorder(null);
+        login_Btn.setBorderPainted(false);
+        login_Btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                login_BtnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel1.setText("Guest Info");
+
+        jLabel8.setForeground(new java.awt.Color(90, 91, 97));
+        jLabel8.setText("Username");
+
+        userName_Txt2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        userName_Txt2.setBorder(null);
+        userName_Txt2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                userName_Txt2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                userName_Txt2MouseExited(evt);
+            }
+        });
+
+        jSep5.setBackground(new java.awt.Color(204, 204, 204));
+        jSep5.setForeground(new java.awt.Color(204, 204, 204));
+        jSep5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jSep5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSep5MouseExited(evt);
+            }
+        });
+
+        jLabel9.setForeground(new java.awt.Color(90, 91, 97));
+        jLabel9.setText("Password");
+
+        password_Txt2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        password_Txt2.setBorder(null);
+        password_Txt2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                password_Txt2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                password_Txt2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                password_Txt2MouseExited(evt);
+            }
+        });
+
+        jSep6.setBackground(new java.awt.Color(204, 204, 204));
+        jSep6.setForeground(new java.awt.Color(204, 204, 204));
+        jSep6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jSep6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSep6MouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSep3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(0, 0, 0)
+                                .addComponent(userName_Txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSep5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(0, 0, 0)
+                                .addComponent(userName_Txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel9)
+                        .addGap(0, 0, 0)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(password_Txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSep6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(30, 30, 30))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(userName_Txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, 0)
+                                .addComponent(jSep3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(password_Txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, 0)
+                                .addComponent(jSep6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
+                        .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(userName_Txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)
+                        .addComponent(jSep5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void userName_TxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_TxtMouseEntered
+        // TODO add your handling code here:
+        jSep1.setBackground(new Color(40,120,200));
+        jSep1.setForeground(new Color(40,120,200));
+    }//GEN-LAST:event_userName_TxtMouseEntered
+
+    private void userName_TxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_TxtMouseExited
+        // TODO add your handling code here:
+        jSep1.setBackground(new Color(204,204,204));
+        jSep1.setForeground(new Color(204,204,204));
+    }//GEN-LAST:event_userName_TxtMouseExited
+
+    private void password_TxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_TxtMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_password_TxtMouseClicked
+
+    private void password_TxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_TxtMouseEntered
+        // TODO add your handling code here:
+        jSep2.setBackground(new Color(40,120,200));
+        jSep2.setForeground(new Color(40,120,200));
+    }//GEN-LAST:event_password_TxtMouseEntered
+
+    private void password_TxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_TxtMouseExited
+        // TODO add your handling code here:
+        jSep2.setBackground(new Color(204,204,204));
+        jSep2.setForeground(new Color(204,204,204));
+    }//GEN-LAST:event_password_TxtMouseExited
+
+    private void jSep1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep1MouseEntered
+        // TODO add your handling code here:
+        jSep1.setBackground(new Color(40,120,200));
+        jSep1.setForeground(new Color(40,120,200));
+    }//GEN-LAST:event_jSep1MouseEntered
+
+    private void jSep1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep1MouseExited
+        // TODO add your handling code here:
+        jSep1.setBackground(new Color(204,204,204));
+        jSep1.setForeground(new Color(204,204,204));
+    }//GEN-LAST:event_jSep1MouseExited
+
+    private void jSep2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep2MouseEntered
+        // TODO add your handling code here:
+        jSep2.setBackground(new Color(40,120,200));
+        jSep2.setForeground(new Color(40,120,200));
+    }//GEN-LAST:event_jSep2MouseEntered
+
+    private void jSep2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep2MouseExited
+        // TODO add your handling code here:
+        jSep2.setBackground(new Color(204,204,204));
+        jSep2.setForeground(new Color(204,204,204));
+    }//GEN-LAST:event_jSep2MouseExited
+
+    private void userName_Txt1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_Txt1MouseEntered
+        // TODO add your handling code here:
+        jSep1.setBackground(new Color(40,120,200));
+        jSep1.setForeground(new Color(40,120,200));
+    }//GEN-LAST:event_userName_Txt1MouseEntered
+
+    private void userName_Txt1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_Txt1MouseExited
+        // TODO add your handling code here:
+        jSep1.setBackground(new Color(204,204,204));
+        jSep1.setForeground(new Color(204,204,204));
+    }//GEN-LAST:event_userName_Txt1MouseExited
+
+    private void jSep3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep3MouseEntered
+        // TODO add your handling code here:
+        jSep1.setBackground(new Color(40,120,200));
+        jSep1.setForeground(new Color(40,120,200));
+    }//GEN-LAST:event_jSep3MouseEntered
+
+    private void jSep3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep3MouseExited
+        // TODO add your handling code here:
+        jSep1.setBackground(new Color(204,204,204));
+        jSep1.setForeground(new Color(204,204,204));
+    }//GEN-LAST:event_jSep3MouseExited
+
+    private void login_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_BtnActionPerformed
+        // TODO add your handling code here:
+      
+    }//GEN-LAST:event_login_BtnActionPerformed
+
+    private void userName_Txt2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_Txt2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userName_Txt2MouseEntered
+
+    private void userName_Txt2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_Txt2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userName_Txt2MouseExited
+
+    private void jSep5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep5MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSep5MouseEntered
+
+    private void jSep5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep5MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSep5MouseExited
+
+    private void password_Txt2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_Txt2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_password_Txt2MouseClicked
+
+    private void password_Txt2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_Txt2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_password_Txt2MouseEntered
+
+    private void password_Txt2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_Txt2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_password_Txt2MouseExited
+
+    private void jSep6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep6MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSep6MouseEntered
+
+    private void jSep6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep6MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSep6MouseExited
 
     /**
      * @param args the command line arguments
@@ -79,5 +493,26 @@ public class Check_In extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JSeparator jSep1;
+    private javax.swing.JSeparator jSep2;
+    private javax.swing.JSeparator jSep3;
+    private javax.swing.JSeparator jSep5;
+    private javax.swing.JSeparator jSep6;
+    private javax.swing.JButton login_Btn;
+    private javax.swing.JPasswordField password_Txt;
+    private javax.swing.JPasswordField password_Txt2;
+    private javax.swing.JTextField userName_Txt;
+    private javax.swing.JTextField userName_Txt1;
+    private javax.swing.JTextField userName_Txt2;
     // End of variables declaration//GEN-END:variables
 }

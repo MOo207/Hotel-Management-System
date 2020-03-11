@@ -6,7 +6,13 @@
 package myapp.check_in;
 
 import java.awt.Color;
-
+import myapp.MyApp;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import jdk.jshell.Diag;
+import myapp.customdialog.Dialog;
 /**
  *
  * @author Mohammed Al 3mawy
@@ -20,6 +26,25 @@ public class Check_In extends javax.swing.JFrame {
         initComponents();
     } 
 
+    
+    public void make_booking() throws Exception {
+
+        Connection conn = null;
+        PreparedStatement ins_guest = null;
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String sql = "INSERT INTO Guests(name,address,phone) values(?,?,?)";
+
+            ins_guest = conn.prepareStatement(sql);
+            ins_guest.setString(1, userName_Txt.getText());
+            ins_guest.setString(2, password_Txt.getText());
+            ins_guest.executeUpdate();
+        } catch(Exception e){
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,21 +60,24 @@ public class Check_In extends javax.swing.JFrame {
         password_Txt = new javax.swing.JPasswordField();
         jSep1 = new javax.swing.JSeparator();
         jSep2 = new javax.swing.JSeparator();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        userName_Txt1 = new javax.swing.JTextField();
-        jSep3 = new javax.swing.JSeparator();
-        login_Btn = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        gu_name = new javax.swing.JTextField();
+        gu_address = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        userName_Txt2 = new javax.swing.JTextField();
-        jSep5 = new javax.swing.JSeparator();
-        jLabel9 = new javax.swing.JLabel();
-        password_Txt2 = new javax.swing.JPasswordField();
-        jSep6 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox4 = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         jLabel3.setForeground(new java.awt.Color(90, 91, 97));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/User-icon.png"))); // NOI18N
@@ -153,97 +181,60 @@ public class Check_In extends javax.swing.JFrame {
                     .addComponent(jLabel2)))
         );
 
-        jLabel6.setForeground(new java.awt.Color(90, 91, 97));
-        jLabel6.setText("Username");
+        jTextField2.setBorder(javax.swing.BorderFactory.createTitledBorder("No. of Rooms"));
 
-        userName_Txt1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        userName_Txt1.setBorder(null);
-        userName_Txt1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                userName_Txt1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                userName_Txt1MouseExited(evt);
-            }
-        });
+        gu_name.setBorder(javax.swing.BorderFactory.createTitledBorder("Guest Name"));
 
-        jSep3.setBackground(new java.awt.Color(204, 204, 204));
-        jSep3.setForeground(new java.awt.Color(204, 204, 204));
-        jSep3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jSep3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jSep3MouseExited(evt);
-            }
-        });
-
-        login_Btn.setBackground(new java.awt.Color(40, 120, 200));
-        login_Btn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        login_Btn.setForeground(new java.awt.Color(255, 255, 255));
-        login_Btn.setText("Check In");
-        login_Btn.setToolTipText("Login");
-        login_Btn.setBorder(null);
-        login_Btn.setBorderPainted(false);
-        login_Btn.addActionListener(new java.awt.event.ActionListener() {
+        gu_address.setBorder(javax.swing.BorderFactory.createTitledBorder("Guest Address"));
+        gu_address.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                login_BtnActionPerformed(evt);
+                gu_addressActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hotel" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Guest Info");
 
-        jLabel8.setForeground(new java.awt.Color(90, 91, 97));
-        jLabel8.setText("Username");
+        jLabel6.setText("Hotel And Rooms info");
 
-        userName_Txt2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        userName_Txt2.setBorder(null);
-        userName_Txt2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                userName_Txt2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                userName_Txt2MouseExited(evt);
+        jTextField5.setBorder(javax.swing.BorderFactory.createTitledBorder("Guest Phone"));
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "To" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
             }
         });
 
-        jSep5.setBackground(new java.awt.Color(204, 204, 204));
-        jSep5.setForeground(new java.awt.Color(204, 204, 204));
-        jSep5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jSep5MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jSep5MouseExited(evt);
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "From" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
             }
         });
 
-        jLabel9.setForeground(new java.awt.Color(90, 91, 97));
-        jLabel9.setText("Password");
-
-        password_Txt2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        password_Txt2.setBorder(null);
-        password_Txt2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                password_Txt2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                password_Txt2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                password_Txt2MouseExited(evt);
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status" }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
             }
         });
 
-        jSep6.setBackground(new java.awt.Color(204, 204, 204));
-        jSep6.setForeground(new java.awt.Color(204, 204, 204));
-        jSep6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jSep6MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jSep6MouseExited(evt);
+        jLabel7.setText("Reservation info");
+
+        jTextField6.setBorder(javax.swing.BorderFactory.createTitledBorder("No. of persons"));
+
+        jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
+        jCheckBox1.setText("Smoke Room");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
             }
         });
 
@@ -253,79 +244,87 @@ public class Check_In extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel1))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSep3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(gu_name, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
+                                        .addComponent(gu_address, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(30, 30, 30)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                    .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
-                                .addGap(0, 0, 0)
-                                .addComponent(userName_Txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSep5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(0, 0, 0)
-                                .addComponent(userName_Txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel9)
-                        .addGap(0, 0, 0)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(password_Txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSep6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(30, 30, 30))
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(20, 20, 20))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(gu_address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(gu_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addComponent(jLabel6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(userName_Txt1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addComponent(jSep3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(password_Txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, 0)
-                                .addComponent(jSep6, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
-                        .addComponent(login_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(userName_Txt2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
-                        .addComponent(jSep5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(17, 17, 17)
+                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(46, 46, 46)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -342,14 +341,11 @@ public class Check_In extends javax.swing.JFrame {
 
     private void userName_TxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_TxtMouseEntered
         // TODO add your handling code here:
-        jSep1.setBackground(new Color(40,120,200));
-        jSep1.setForeground(new Color(40,120,200));
     }//GEN-LAST:event_userName_TxtMouseEntered
 
     private void userName_TxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_TxtMouseExited
         // TODO add your handling code here:
-        jSep1.setBackground(new Color(204,204,204));
-        jSep1.setForeground(new Color(204,204,204));
+       
     }//GEN-LAST:event_userName_TxtMouseExited
 
     private void password_TxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_TxtMouseClicked
@@ -357,105 +353,52 @@ public class Check_In extends javax.swing.JFrame {
     }//GEN-LAST:event_password_TxtMouseClicked
 
     private void password_TxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_TxtMouseEntered
-        // TODO add your handling code here:
-        jSep2.setBackground(new Color(40,120,200));
-        jSep2.setForeground(new Color(40,120,200));
+
     }//GEN-LAST:event_password_TxtMouseEntered
 
     private void password_TxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_TxtMouseExited
-        // TODO add your handling code here:
-        jSep2.setBackground(new Color(204,204,204));
-        jSep2.setForeground(new Color(204,204,204));
+
     }//GEN-LAST:event_password_TxtMouseExited
 
     private void jSep1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep1MouseEntered
-        // TODO add your handling code here:
-        jSep1.setBackground(new Color(40,120,200));
-        jSep1.setForeground(new Color(40,120,200));
+     
     }//GEN-LAST:event_jSep1MouseEntered
 
     private void jSep1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep1MouseExited
-        // TODO add your handling code here:
-        jSep1.setBackground(new Color(204,204,204));
-        jSep1.setForeground(new Color(204,204,204));
+        // TODO add your handling cod
     }//GEN-LAST:event_jSep1MouseExited
 
     private void jSep2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep2MouseEntered
-        // TODO add your handling code here:
-        jSep2.setBackground(new Color(40,120,200));
-        jSep2.setForeground(new Color(40,120,200));
+
     }//GEN-LAST:event_jSep2MouseEntered
 
     private void jSep2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep2MouseExited
-        // TODO add your handling code here:
-        jSep2.setBackground(new Color(204,204,204));
-        jSep2.setForeground(new Color(204,204,204));
+
     }//GEN-LAST:event_jSep2MouseExited
 
-    private void userName_Txt1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_Txt1MouseEntered
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        jSep1.setBackground(new Color(40,120,200));
-        jSep1.setForeground(new Color(40,120,200));
-    }//GEN-LAST:event_userName_Txt1MouseEntered
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void userName_Txt1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_Txt1MouseExited
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
-        jSep1.setBackground(new Color(204,204,204));
-        jSep1.setForeground(new Color(204,204,204));
-    }//GEN-LAST:event_userName_Txt1MouseExited
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
-    private void jSep3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep3MouseEntered
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         // TODO add your handling code here:
-        jSep1.setBackground(new Color(40,120,200));
-        jSep1.setForeground(new Color(40,120,200));
-    }//GEN-LAST:event_jSep3MouseEntered
+    }//GEN-LAST:event_jComboBox3ActionPerformed
 
-    private void jSep3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep3MouseExited
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
         // TODO add your handling code here:
-        jSep1.setBackground(new Color(204,204,204));
-        jSep1.setForeground(new Color(204,204,204));
-    }//GEN-LAST:event_jSep3MouseExited
+    }//GEN-LAST:event_jComboBox4ActionPerformed
 
-    private void login_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_BtnActionPerformed
+    private void gu_addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gu_addressActionPerformed
         // TODO add your handling code here:
-      
-    }//GEN-LAST:event_login_BtnActionPerformed
+    }//GEN-LAST:event_gu_addressActionPerformed
 
-    private void userName_Txt2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_Txt2MouseEntered
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_userName_Txt2MouseEntered
-
-    private void userName_Txt2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userName_Txt2MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userName_Txt2MouseExited
-
-    private void jSep5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep5MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSep5MouseEntered
-
-    private void jSep5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep5MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSep5MouseExited
-
-    private void password_Txt2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_Txt2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_password_Txt2MouseClicked
-
-    private void password_Txt2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_Txt2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_password_Txt2MouseEntered
-
-    private void password_Txt2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password_Txt2MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_password_Txt2MouseExited
-
-    private void jSep6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep6MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSep6MouseEntered
-
-    private void jSep6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSep6MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSep6MouseExited
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -493,26 +436,29 @@ public class Check_In extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextField gu_address;
+    private javax.swing.JTextField gu_name;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSeparator jSep1;
     private javax.swing.JSeparator jSep2;
-    private javax.swing.JSeparator jSep3;
-    private javax.swing.JSeparator jSep5;
-    private javax.swing.JSeparator jSep6;
-    private javax.swing.JButton login_Btn;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
     private javax.swing.JPasswordField password_Txt;
-    private javax.swing.JPasswordField password_Txt2;
     private javax.swing.JTextField userName_Txt;
-    private javax.swing.JTextField userName_Txt1;
-    private javax.swing.JTextField userName_Txt2;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import myapp.customdialog.Dialog;
-import myapp.menu.Main_Frame;
+import myapp.main_frame.Main_Frame;
 import myapp.MyApp;
 import myapp.forget_password.forget_password;
 import myapp.signup.SignUp_Form;

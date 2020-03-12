@@ -15,7 +15,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 //create class
-class DatePicker {
+public class DatePicker {
     //define variables
 
     int month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH);

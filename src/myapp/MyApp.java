@@ -8,7 +8,7 @@ import myapp.Login.Login_Frame;
  */
 public class MyApp {
 
-    public static final String DB_URL = "jdbc:mysql://localhost/hotel management system";
+    public static final String DB_URL = "jdbc:mysql://localhost/hotel management system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     public static final String USER = "root";
     public static final String PASS = "";
     /**

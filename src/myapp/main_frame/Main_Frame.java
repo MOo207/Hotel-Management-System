@@ -5,8 +5,8 @@
  */
 package myapp.main_frame;
 
-import approve_employee.Approve_Employee;
-import hotel_room_management.Hotel_Room_Management;
+import myapp.approve_employee.Approve_Employee;
+import myapp.hotel_room_management.Hotel_Room_Management;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;

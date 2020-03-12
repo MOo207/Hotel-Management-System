@@ -62,11 +62,9 @@
                   <EmptySpace min="87" pref="63" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="Disapprove_btn" pref="130" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="appr_combo" max="32767" attributes="0"/>
-                          <Component id="disap_combo" max="32767" attributes="0"/>
-                          <Component id="Approve_btn" alignment="1" pref="130" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="appr_combo" max="32767" attributes="0"/>
+                      <Component id="disap_combo" max="32767" attributes="0"/>
+                      <Component id="Approve_btn" alignment="1" pref="130" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
               </Group>
@@ -130,7 +128,6 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
-            <Property name="selectedIndex" type="int" value="-1"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>

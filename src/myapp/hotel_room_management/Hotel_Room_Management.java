@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hotel_room_management;
+package myapp.hotel_room_management;
 
 import java.awt.Color;
 
@@ -33,9 +33,14 @@ public class Hotel_Room_Management extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        edt_btn = new javax.swing.JButton();
-        del_btn = new javax.swing.JButton();
-        add_btn = new javax.swing.JButton();
+        hotel_edt = new javax.swing.JButton();
+        hotel_del = new javax.swing.JButton();
+        add_hotel = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        room_add = new javax.swing.JButton();
+        room_edt = new javax.swing.JButton();
+        room_del = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -72,7 +77,7 @@ public class Hotel_Room_Management extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(72, 72, 72)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -86,81 +91,165 @@ public class Hotel_Room_Management extends javax.swing.JFrame {
                     .addComponent(jLabel2)))
         );
 
-        edt_btn.setBackground(new java.awt.Color(255, 255, 255));
-        edt_btn.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
-        edt_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/Pencil-icon.png"))); // NOI18N
-        edt_btn.setText("   Edit");
-        edt_btn.setBorderPainted(false);
-        edt_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+        hotel_edt.setBackground(new java.awt.Color(40, 120, 200));
+        hotel_edt.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
+        hotel_edt.setForeground(new java.awt.Color(255, 255, 255));
+        hotel_edt.setText("Edit Hotel");
+        hotel_edt.setBorderPainted(false);
+        hotel_edt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                edt_btnMouseEntered(evt);
+                hotel_edtMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                edt_btnMouseExited(evt);
+                hotel_edtMouseExited(evt);
+            }
+        });
+        hotel_edt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hotel_edtActionPerformed(evt);
             }
         });
 
-        del_btn.setBackground(new java.awt.Color(255, 255, 255));
-        del_btn.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
-        del_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/Editing-Delete-icon.png"))); // NOI18N
-        del_btn.setText(" Delete");
-        del_btn.setBorderPainted(false);
-        del_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+        hotel_del.setBackground(new java.awt.Color(40, 120, 200));
+        hotel_del.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
+        hotel_del.setForeground(new java.awt.Color(255, 255, 255));
+        hotel_del.setText("- Delete Hotel");
+        hotel_del.setBorderPainted(false);
+        hotel_del.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                del_btnMouseEntered(evt);
+                hotel_delMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                del_btnMouseExited(evt);
+                hotel_delMouseExited(evt);
             }
         });
-        del_btn.addActionListener(new java.awt.event.ActionListener() {
+        hotel_del.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                del_btnActionPerformed(evt);
+                hotel_delActionPerformed(evt);
             }
         });
 
-        add_btn.setBackground(new java.awt.Color(255, 255, 255));
-        add_btn.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
-        add_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/Data-Add-Column-icon.png"))); // NOI18N
-        add_btn.setText("Add");
-        add_btn.setBorderPainted(false);
-        add_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+        add_hotel.setBackground(new java.awt.Color(40, 120, 200));
+        add_hotel.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
+        add_hotel.setForeground(new java.awt.Color(255, 255, 255));
+        add_hotel.setText("+ Add Hotel");
+        add_hotel.setBorderPainted(false);
+        add_hotel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                add_btnMouseEntered(evt);
+                add_hotelMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                add_btnMouseExited(evt);
+                add_hotelMouseExited(evt);
             }
         });
-        add_btn.addActionListener(new java.awt.event.ActionListener() {
+        add_hotel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                add_btnActionPerformed(evt);
+                add_hotelActionPerformed(evt);
             }
         });
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel1.setText("Hotels manage");
+
+        room_add.setBackground(new java.awt.Color(40, 120, 200));
+        room_add.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
+        room_add.setForeground(new java.awt.Color(255, 255, 255));
+        room_add.setText("+ Add Room");
+        room_add.setBorderPainted(false);
+        room_add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                room_addMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                room_addMouseExited(evt);
+            }
+        });
+        room_add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                room_addActionPerformed(evt);
+            }
+        });
+
+        room_edt.setBackground(new java.awt.Color(40, 120, 200));
+        room_edt.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
+        room_edt.setForeground(new java.awt.Color(255, 255, 255));
+        room_edt.setText("Edit Room");
+        room_edt.setBorderPainted(false);
+        room_edt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                room_edtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                room_edtMouseExited(evt);
+            }
+        });
+
+        room_del.setBackground(new java.awt.Color(40, 120, 200));
+        room_del.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
+        room_del.setForeground(new java.awt.Color(255, 255, 255));
+        room_del.setText("- Delete Room");
+        room_del.setBorderPainted(false);
+        room_del.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                room_delMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                room_delMouseExited(evt);
+            }
+        });
+        room_del.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                room_delActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel4.setText("Rooms manage");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(add_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(edt_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(del_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(add_hotel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(hotel_del)
+                                .addGap(18, 18, 18)
+                                .addComponent(hotel_edt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(room_add, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(room_del)
+                            .addGap(18, 18, 18)
+                            .addComponent(room_edt, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(add_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edt_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(del_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(add_hotel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hotel_del, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hotel_edt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(room_add, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(room_del, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(room_edt, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -172,7 +261,7 @@ public class Hotel_Room_Management extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -188,44 +277,81 @@ public class Hotel_Room_Management extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel5MouseClicked
 
-    private void edt_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edt_btnMouseEntered
+    private void hotel_edtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hotel_edtMouseEntered
         // TODO add your handling code here:
-        edt_btn.setBackground(new Color(40, 120, 200));
-    }//GEN-LAST:event_edt_btnMouseEntered
+        hotel_edt.setBackground(new Color(40, 120, 200));
+    }//GEN-LAST:event_hotel_edtMouseEntered
 
-    private void edt_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edt_btnMouseExited
+    private void hotel_edtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hotel_edtMouseExited
         // TODO add your handling code here:
-        edt_btn.setBackground(Color.white);
-    }//GEN-LAST:event_edt_btnMouseExited
+        hotel_edt.setBackground(Color.white);
+    }//GEN-LAST:event_hotel_edtMouseExited
 
-    private void del_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_del_btnMouseEntered
+    private void hotel_delMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hotel_delMouseEntered
         // TODO add your handling code here:
-        del_btn.setBackground(new Color(40, 120, 200));
-    }//GEN-LAST:event_del_btnMouseEntered
+        hotel_del.setBackground(new Color(40, 120, 200));
+    }//GEN-LAST:event_hotel_delMouseEntered
 
-    private void del_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_del_btnMouseExited
+    private void hotel_delMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hotel_delMouseExited
         // TODO add your handling code here:
-        del_btn.setBackground(Color.white);
-    }//GEN-LAST:event_del_btnMouseExited
+        hotel_del.setBackground(Color.white);
+    }//GEN-LAST:event_hotel_delMouseExited
 
-    private void del_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_del_btnActionPerformed
+    private void hotel_delActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotel_delActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_del_btnActionPerformed
+        new Delete_Hotel().setVisible(true);
+    }//GEN-LAST:event_hotel_delActionPerformed
 
-    private void add_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_btnMouseEntered
+    private void add_hotelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_hotelMouseEntered
         // TODO add your handling code here:
-        add_btn.setBackground(new Color(40, 120, 200));
-    }//GEN-LAST:event_add_btnMouseEntered
+        add_hotel.setBackground(new Color(40, 120, 200));
+    }//GEN-LAST:event_add_hotelMouseEntered
 
-    private void add_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_btnMouseExited
+    private void add_hotelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add_hotelMouseExited
         // TODO add your handling code here:
-        add_btn.setBackground(Color.white);
-    }//GEN-LAST:event_add_btnMouseExited
+        add_hotel.setBackground(Color.white);
+    }//GEN-LAST:event_add_hotelMouseExited
 
-    private void add_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_btnActionPerformed
+    private void add_hotelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_hotelActionPerformed
         // TODO add your handling code here:
+        new Add_Hotel().setVisible(true);
+    }//GEN-LAST:event_add_hotelActionPerformed
 
-    }//GEN-LAST:event_add_btnActionPerformed
+    private void room_addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_room_addMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_room_addMouseEntered
+
+    private void room_addMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_room_addMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_room_addMouseExited
+
+    private void room_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_room_addActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_room_addActionPerformed
+
+    private void room_edtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_room_edtMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_room_edtMouseEntered
+
+    private void room_edtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_room_edtMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_room_edtMouseExited
+
+    private void room_delMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_room_delMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_room_delMouseEntered
+
+    private void room_delMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_room_delMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_room_delMouseExited
+
+    private void room_delActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_room_delActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_room_delActionPerformed
+
+    private void hotel_edtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotel_edtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hotel_edtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,12 +389,17 @@ public class Hotel_Room_Management extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton add_btn;
-    private javax.swing.JButton del_btn;
-    private javax.swing.JButton edt_btn;
+    private javax.swing.JButton add_hotel;
+    private javax.swing.JButton hotel_del;
+    private javax.swing.JButton hotel_edt;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JButton room_add;
+    private javax.swing.JButton room_del;
+    private javax.swing.JButton room_edt;
     // End of variables declaration//GEN-END:variables
 }

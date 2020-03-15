@@ -75,8 +75,8 @@
                               <Component id="ho_ro_btn" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="new_btn" min="-2" max="-2" attributes="0"/>
                                       <Component id="sho_btn" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="new_btn" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -85,7 +85,7 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="check_out" min="-2" max="-2" attributes="0"/>
+                                      <Component id="check_out" min="-2" pref="150" max="-2" attributes="0"/>
                                       <Component id="del_btn" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -113,12 +113,10 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="new_btn" alignment="0" max="32767" attributes="0"/>
-                          <Component id="check_out" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="appr_btn" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="check_out" alignment="0" pref="90" max="32767" attributes="0"/>
+                      <Component id="appr_btn" alignment="0" pref="90" max="32767" attributes="0"/>
+                      <Component id="new_btn" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">

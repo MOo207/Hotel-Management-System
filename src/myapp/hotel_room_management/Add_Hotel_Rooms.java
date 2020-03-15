@@ -16,31 +16,57 @@ import myapp.MyApp;
  *
  * @author Mohammed Al 3mawy
  */
-public class Add_Hotel extends javax.swing.JFrame {
+public class Add_Hotel_Rooms extends javax.swing.JFrame {
 
     /**
      * Creates new form Add_Hotel_and_Room
      */
-    public Add_Hotel() {
+    String selected;
+    public Add_Hotel_Rooms() {
         initComponents();
+        get_hotels();
     }
 
+    public void get_hotels() {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String select = "select * from hotel";
+
+            preparedStatement = conn.prepareStatement(select);
+
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                String name = rs.getString("name");
+                hotel_combo.addItem(name);
+            }
+        } catch (Exception e) {
+            new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+    }
+    
     public void add_hotel(){
         Connection conn = null;
         PreparedStatement ins_hotel = null;
 
         try {
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            String query = "INSERT INTO `hotel management system`.`hotel` (`name`, `addres`, `Total_rooms#`, `Total_floors#`) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO `hotel management system`.`hotel` (`name`, `address`, `Total_floors#`, `Total_rooms#`, `Total_smoke#`) VALUES (?, ?, ?, ?, ?)";
     
             ins_hotel = conn.prepareStatement(query);
             ins_hotel.setString(1, name.getText());
             ins_hotel.setString(2, address.getText());
-            ins_hotel.setInt(3, Integer.valueOf(rooms_num.getText()));
-            ins_hotel.setInt(4, Integer.valueOf(floor_num.getText()));
+            ins_hotel.setInt(3, Integer.valueOf(floor_num.getText()));
+            ins_hotel.setInt(4, Integer.valueOf(rooms_num.getText()));
+            ins_hotel.setInt(5, Integer.valueOf(smoke_num.getText()));
             
             ins_hotel.executeUpdate();
             
+            update_rooms();
             new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, "Hotel Added!").setVisible(true);
         } catch(Exception e){
         Dialog d = new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, e.toString());
@@ -48,7 +74,63 @@ public class Add_Hotel extends javax.swing.JFrame {
         }
         
     }
-    /**
+
+    public void update_rooms(){
+        Connection conn = null;
+        PreparedStatement ins = null;
+        PreparedStatement sel = null;
+        ResultSet rs = null;
+        if(selected == null) {
+            hotel_combo.addItem(name.getText());
+            hotel_combo.updateUI();
+        }
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            System.out.println(selected);
+            String query1 = "select * from hotel where name=?";
+            sel = conn.prepareStatement(query1);
+            sel.setString(1, selected);
+            rs = sel.executeQuery();
+            //INSERT INTO Customers (CustomerName, City, Country) SELECT SupplierName, City, Country FROM Suppliers WHERE Country='Germany';
+           
+            
+            while (rs.next()) {
+            int floors_num = rs.getInt("Total_floors#");
+            int rooms_num = rs.getInt("Total_rooms#");
+            for (int i = 1; i < floors_num; i++) {
+                for (int j = 1; j < rooms_num/floors_num; j++) {
+                String query2 = "INSERT INTO `hotel management system`.`rooms` "
+                        + "(`hotel`, `floor#`, `room#`, `smoke`, `capacity`)"
+                        + " VALUES ("+rs.getInt("hotel_id")+","+i+","+j+","+set_smoke(j)+","+set_capacity(j)+")";
+                        ins = conn.prepareStatement(query2);
+                        ins.executeUpdate();
+                }
+            }
+            }
+            new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, " Hotel Rooms Updated!").setVisible(true);
+        } catch(Exception e){
+        Dialog d = new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, e.toString());
+        d.setVisible(true);
+        }
+        
+    }
+    
+    public int set_smoke(int j){
+    if(j%2 == 0) return 0;
+    else return 1;
+    }
+
+    public int set_capacity(int j){
+        int capacity = 0;
+        for (int i = 0; i < j; i++) {
+        if(j%3 == 1) return capacity = 1;
+        else if(j%3 == 2) return capacity = 2;
+        else return capacity = 3;
+        }
+        return capacity;
+    }
+    
+      /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
@@ -66,8 +148,13 @@ public class Add_Hotel extends javax.swing.JFrame {
         address = new javax.swing.JTextField();
         floor_num = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        update_rooms = new javax.swing.JButton();
+        smoke_num = new javax.swing.JTextField();
+        hotel_combo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -92,7 +179,7 @@ public class Add_Hotel extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Add Hotel");
+        jLabel2.setText("Add Hotel and Rooms");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -136,6 +223,29 @@ public class Add_Hotel extends javax.swing.JFrame {
             }
         });
 
+        update_rooms.setBackground(new java.awt.Color(40, 120, 200));
+        update_rooms.setForeground(new java.awt.Color(255, 255, 255));
+        update_rooms.setText("Update Rooms");
+        update_rooms.setBorderPainted(false);
+        update_rooms.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                update_roomsActionPerformed(evt);
+            }
+        });
+
+        smoke_num.setBorder(javax.swing.BorderFactory.createTitledBorder("Smoke #"));
+        smoke_num.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                smoke_numActionPerformed(evt);
+            }
+        });
+
+        hotel_combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hotel_comboActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -143,35 +253,41 @@ public class Add_Hotel extends javax.swing.JFrame {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(name)
+                    .addComponent(address)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(floor_num, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rooms_num, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
+                        .addComponent(smoke_num, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(rooms_num, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(floor_num)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
+                        .addComponent(hotel_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(update_rooms)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rooms_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(floor_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(floor_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rooms_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(smoke_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(hotel_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(update_rooms))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -208,6 +324,20 @@ public class Add_Hotel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_floor_numActionPerformed
 
+    private void smoke_numActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoke_numActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_smoke_numActionPerformed
+
+    private void update_roomsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_roomsActionPerformed
+        // TODO add your handling code here:
+        update_rooms();
+    }//GEN-LAST:event_update_roomsActionPerformed
+
+    private void hotel_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotel_comboActionPerformed
+        // TODO add your handling code here:
+        selected = hotel_combo.getSelectedItem().toString();
+    }//GEN-LAST:event_hotel_comboActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -225,14 +355,18 @@ public class Add_Hotel extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Add_Hotel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Hotel_Rooms.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Add_Hotel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Hotel_Rooms.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Add_Hotel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Hotel_Rooms.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Add_Hotel.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Add_Hotel_Rooms.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -241,7 +375,7 @@ public class Add_Hotel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Add_Hotel().setVisible(true);
+                new Add_Hotel_Rooms().setVisible(true);
             }
         });
     }
@@ -249,6 +383,7 @@ public class Add_Hotel extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField address;
     private javax.swing.JTextField floor_num;
+    private javax.swing.JComboBox<String> hotel_combo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -256,5 +391,7 @@ public class Add_Hotel extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField name;
     private javax.swing.JTextField rooms_num;
+    private javax.swing.JTextField smoke_num;
+    private javax.swing.JButton update_rooms;
     // End of variables declaration//GEN-END:variables
 }

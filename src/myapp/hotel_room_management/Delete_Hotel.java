@@ -20,7 +20,8 @@ public class Delete_Hotel extends javax.swing.JFrame {
     /**
      * Creates new form Delete_Hotel
      */
-    String selected;
+    String selected_hotel;
+    int selected_hotel_id;
     public Delete_Hotel() {
         initComponents();
         get_hotels();
@@ -39,6 +40,7 @@ public class Delete_Hotel extends javax.swing.JFrame {
 
             rs = preparedStatement.executeQuery();
 
+           
             while (rs.next()) {
                 String name = rs.getString("name");
                 hotel_combo.addItem(name);
@@ -51,8 +53,7 @@ public class Delete_Hotel extends javax.swing.JFrame {
     public void delete_hotel(String selected){
         Connection conn = null;
         PreparedStatement del_hotel = null;
-        ResultSet rs = null;
-
+        delete_hotel_Rooms();
         try {
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
             String delete = "DELETE FROM `hotel management system`.`hotel` WHERE (`name` = ?)";
@@ -61,14 +62,55 @@ public class Delete_Hotel extends javax.swing.JFrame {
             del_hotel.setString(1, selected);
             del_hotel.executeUpdate();
 
-             new Dialog(this, rootPaneCheckingEnabled, this.selected+" has Deleted").setVisible(true);
+             new Dialog(this, rootPaneCheckingEnabled, this.selected_hotel+" has Deleted").setVisible(true);
             hotel_combo.removeItem(selected);
             hotel_combo.updateUI();
         } catch (Exception e) {
             new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
         }
     }
+    
+    public void delete_hotel_Rooms(){
+        Connection conn = null;
+        PreparedStatement del_hotel = null;
 
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String delete = "DELETE FROM Rooms WHERE (`hotel` = ?)";
+            del_hotel = conn.prepareStatement(delete);
+            del_hotel.setInt(1, selected_hotel_id);
+            del_hotel.executeUpdate();
+
+             new Dialog(this, rootPaneCheckingEnabled, this.selected_hotel+" hotel and it's room has been Deleted!").setVisible(true);
+            
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+    }
+    
+    int selected_id(){
+    Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String select = "select hotel_id from hotel where name=?";
+
+            preparedStatement = conn.prepareStatement(select);
+            preparedStatement.setString(1, selected_hotel);
+            rs = preparedStatement.executeQuery();
+
+           if(rs.next()){
+           selected_hotel_id = rs.getInt("hotel_id");
+               System.err.println(selected_hotel_id);
+           }
+           
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+        return selected_hotel_id;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,6 +128,8 @@ public class Delete_Hotel extends javax.swing.JFrame {
         del_btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(40, 120, 200), null));
@@ -197,12 +241,15 @@ public class Delete_Hotel extends javax.swing.JFrame {
 
     private void hotel_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotel_comboActionPerformed
         // TODO add your handling code here:
-        selected = hotel_combo.getSelectedItem().toString();
+        try{
+            selected_hotel = hotel_combo.getSelectedItem().toString();
+        } catch(Exception e){ new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, e.toString());}
+        selected_hotel_id =selected_id();
     }//GEN-LAST:event_hotel_comboActionPerformed
 
     private void del_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_del_btnActionPerformed
         // TODO add your handling code here:
-        delete_hotel(selected);
+        delete_hotel(selected_hotel);
     }//GEN-LAST:event_del_btnActionPerformed
 
     /**

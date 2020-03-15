@@ -4,7 +4,6 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="undecorated" type="boolean" value="true"/>
-    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -75,7 +74,7 @@
                                   <Component id="gu_address" alignment="1" max="32767" attributes="0"/>
                                   <Component id="gu_name" alignment="1" min="-2" pref="185" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jComboBox1" min="-2" pref="186" max="-2" attributes="0"/>
+                              <Component id="hotel_combo" min="-2" pref="186" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="jTextField6" min="-2" pref="93" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -122,7 +121,7 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jComboBox1" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="hotel_combo" min="-2" pref="35" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextField6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -239,7 +238,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gu_addressActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="hotel_combo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
@@ -248,7 +247,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hotel_comboActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>

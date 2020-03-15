@@ -13,7 +13,8 @@ package myapp.datepicker;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import java.util.Date; 
+  
 //create class
 public class DatePicker {
     //define variables
@@ -115,7 +116,7 @@ public class DatePicker {
         {
             button[x].setText("");//set text
         }
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd-MM-yyyy");
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
         //create object of SimpleDateFormat 
         java.util.Calendar cal = java.util.Calendar.getInstance();
         //create object of java.util.Calendar 
@@ -138,7 +139,7 @@ public class DatePicker {
         if (day.equals("")) {
             return day;
         }
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MM-dd-yyyy");
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
         java.util.Calendar cal = java.util.Calendar.getInstance();
         cal.set(year, month, Integer.parseInt(day));
         return sdf.format(cal.getTime());

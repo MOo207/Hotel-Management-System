@@ -12,47 +12,162 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import javax.swing.JFrame;
-import jdk.jshell.Diag;
+import myapp.Login.Login_Frame;
 import myapp.customdialog.Dialog;
 import myapp.main_frame.Main_Frame;
+import java.text.SimpleDateFormat;  
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Mohammed Al 3mawy
  */
 public class Check_In extends javax.swing.JFrame {
-
+    String selected_hotel;
     static String from_date;
     static String to_date;
+    int hotel_id;
+    int agent_id;
+    int guest_id;
     /**
      * Creates new form Check_In
      */
     public Check_In() {
         initComponents();
+        get_hotels();
     }
     
     
     public void make_booking() throws Exception {
 
         Connection conn = null;
-        PreparedStatement ins_guest = null;
+        PreparedStatement make_booking;
         try {
-            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            String sql = "INSERT INTO Guests(name,address,phone) values(?,?,?)";
-
-            ins_guest = conn.prepareStatement(sql);
-            ins_guest.setString(1, gu_name.getText());
-            ins_guest.setString(2, gu_address.getText());
-            ins_guest.setString(3, gu_phone.getText());
-            ins_guest.executeUpdate();
+            insert_geust();
+            get_hotel_id();
+            get_guest_id();
+            get_agent_id();
+            
+            String make_booking_query = "INSERT INTO Booking_Transaction(`hotel`, `guest`,`agent`,`bookedroom`, `from`,`to`,`status`) values(?,?,?,?,?,?,?)";
+            make_booking = conn.prepareStatement(make_booking_query);
+            make_booking.setInt(1, hotel_id);
+            make_booking.setInt(2, guest_id);
+            make_booking.setInt(3, agent_id);
+            make_booking.setInt(4, /*?????*/agent_id);
+            make_booking.setString(5, from_date);
+            make_booking.setString(6, to_date);
+            make_booking.setInt(7, 1);
             
         } catch(Exception e){
             new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
         }
         
     }
+    
+    public void test(){
+            get_hotel_id();
+            get_guest_id();
+            get_agent_id();
             
-        
+            System.err.println(hotel_id+"  "+guest_id+"  "+ agent_id);
+    
+    }
+    
+    public void insert_geust(){
+        Connection conn = null;
+        PreparedStatement new_guest_query = null;
+
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String insert_guest = "INSERT INTO Guests(name,address,phone) values(?,?,?)";
+            
+            new_guest_query = conn.prepareStatement(insert_guest);
+            new_guest_query.setString(1, gu_name.getText());
+            new_guest_query.setString(2, gu_address.getText());
+            new_guest_query.setString(3, gu_phone.getText());
+            new_guest_query.executeUpdate();
+            
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+    }
+    
+    public void get_guest_id(){
+        Connection conn = null;
+       PreparedStatement get_guest_id = null;
+        ResultSet guest_id = null;
+        try {
+            String get_geust_id_query = "select agent_id from Agents where name=?";
+            get_guest_id = conn.prepareStatement(get_geust_id_query);
+            get_guest_id.setString(1,gu_name.getText());
+            guest_id = get_guest_id.executeQuery();
+            System.err.println(this.guest_id);
+            this.guest_id = guest_id.getInt("guest_id");
+            
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+    }
+    
+    public void get_agent_id(){
+        Connection conn = null;
+       PreparedStatement get_agent_id_query = null;
+        ResultSet agent_id = null;
+        try {
+            String get_agent_id = "select agent_id from Agents where name=?";
+            get_agent_id_query = conn.prepareStatement(get_agent_id);
+            System.err.println(Login_Frame.agent_name);
+            get_agent_id_query.setString(1,Login_Frame.agent_name);
+            agent_id = get_agent_id_query.executeQuery();
+            
+            this.agent_id = agent_id.getInt("agent_id");
+            System.err.println(this.agent_id);
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+    }
+            
+    public void get_hotel_id(){
+        Connection conn = null;
+        PreparedStatement hotel_id_query = null;
+        ResultSet hotel_id = null;
+        try {
+            String get_hotel_id = "select hotel_id from Hotel where name=?";
+            hotel_id_query = conn.prepareStatement(get_hotel_id);
+            hotel_id_query.setString(1, selected_hotel);
+            hotel_id = hotel_id_query.executeQuery();
+            
+            this.hotel_id = hotel_id.getInt("hotel_id");
+            System.err.println(this.hotel_id);
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+    }
+         public void get_hotels() {
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String select = "select * from hotel";
+
+            preparedStatement = conn.prepareStatement(select);
+
+            rs = preparedStatement.executeQuery();
+
+           
+            while (rs.next()) {
+                String name = rs.getString("name");
+                hotel_combo.addItem(name);
+            }
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,7 +184,7 @@ public class Check_In extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         gu_name = new javax.swing.JTextField();
         gu_address = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        hotel_combo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         gu_phone = new javax.swing.JTextField();
@@ -86,7 +201,6 @@ public class Check_In extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(40, 120, 200), null));
@@ -142,10 +256,10 @@ public class Check_In extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hotel" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        hotel_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hotel" }));
+        hotel_combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                hotel_comboActionPerformed(evt);
             }
         });
 
@@ -228,7 +342,7 @@ public class Check_In extends javax.swing.JFrame {
                                 .addComponent(gu_phone, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(gu_address, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(gu_name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hotel_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -264,7 +378,7 @@ public class Check_In extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(hotel_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,9 +426,10 @@ public class Check_In extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel5MouseClicked
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void hotel_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotel_comboActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+         selected_hotel = hotel_combo.getSelectedItem().toString();
+    }//GEN-LAST:event_hotel_comboActionPerformed
 
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
         // TODO add your handling code here:
@@ -330,8 +445,12 @@ public class Check_In extends javax.swing.JFrame {
 
     private void pick_fromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pick_fromActionPerformed
         // TODO add your handling code here:
-         from_date = new DatePicker(this).setPickedDate();
-         from.setText("From Date: "+from_date);
+        
+       
+        test();
+        String date = new DatePicker(this).setPickedDate();
+        from_date = date;
+        from.setText("From Date: "+from_date);
     }//GEN-LAST:event_pick_fromActionPerformed
 
     private void pick_toActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pick_toActionPerformed
@@ -381,9 +500,9 @@ public class Check_In extends javax.swing.JFrame {
     private javax.swing.JTextField gu_address;
     private javax.swing.JTextField gu_name;
     private javax.swing.JTextField gu_phone;
+    private javax.swing.JComboBox<String> hotel_combo;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

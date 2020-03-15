@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import myapp.customdialog.Dialog;
 import myapp.main_frame.Main_Frame;
 import myapp.MyApp;
@@ -31,6 +32,7 @@ public class Login_Frame extends javax.swing.JFrame {
     /**
      * Creates new form Signin_form
      */
+    public static String agent_name;
     public Login_Frame() {
         initComponents();
     }
@@ -58,6 +60,8 @@ public class Login_Frame extends javax.swing.JFrame {
              preparedStatement.setString(2, password_Txt.getText());
             rs = preparedStatement.executeQuery();
 
+            getUserName_Txt();
+            
             if (rs.next()) {
                 System.out.println(rs.getString(1)+rs.getString(2)+rs.getString(3)+rs.getString(4)+rs.getString(5));
                 String Password = rs.getString("password");
@@ -104,6 +108,11 @@ public class Login_Frame extends javax.swing.JFrame {
         }
     }
 
+    public String getUserName_Txt() {
+        return agent_name = userName_Txt.getText();
+    }
+
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

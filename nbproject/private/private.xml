@@ -4,13 +4,16 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/main_frame/Main_Frame.java</file>
-            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/forget_password/forget_password.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/approve_employee/Approve_Employee.java</file>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/hotel_room_management/Hotel_Room_Management.java</file>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/check_in/Check_In.java</file>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/signup/SignUp_Form.java</file>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/datepicker/DatePicker.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/hotel_room_management/Add_Hotel_Rooms.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/hotel_room_management/Edit_Hotels.java</file>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/MyApp.java</file>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/Login/Login_Frame.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/hotel_room_management/Delete_Hotel.java</file>
         </group>
     </open-files>
 </project-private>

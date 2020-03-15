@@ -34,10 +34,10 @@ CREATE TABLE Hotel (
   `hotel_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   `name` varchar(100) NOT NULL,
   `addres` varchar(255) NOT NULL,
-  `Total_rooms#` int,
-  `Total_floors#` int
+  `Total_floors#` int not null,
+  `Total_rooms#` int not null,
+  `Total_smoke#` int not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 #
 # TABLE STRUCTURE FOR: Rooms
@@ -50,7 +50,7 @@ CREATE TABLE Rooms (
     `floor#` INT NOT NULL,
     `smoke` TINYINT(1) UNSIGNED NOT NULL,
     `capacity` ENUM('Individual', 'Double Room', 'Three Guests') NOT NULL,
-    `status` ENUM('Idle', 'Full', 'Hold') NOT NULL,
+    `status` ENUM('Idle', 'Full', 'Hold') NOT NULL default 'Idle',
     PRIMARY KEY (`room_id`),
     FOREIGN KEY (`hotel`)
         REFERENCES Hotel (`hotel_id`)

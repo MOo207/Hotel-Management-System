@@ -21,32 +21,10 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
     /**
      * Creates new form Add_Hotel_and_Room
      */
-    String selected;
+    static String hotel_name;
+    static int smoke;
     public Add_Hotel_Rooms() {
         initComponents();
-        get_hotels();
-    }
-
-    public void get_hotels() {
-        Connection conn = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet rs = null;
-
-        try {
-            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            String select = "select * from hotel";
-
-            preparedStatement = conn.prepareStatement(select);
-
-            rs = preparedStatement.executeQuery();
-
-            while (rs.next()) {
-                String name = rs.getString("name");
-                hotel_combo.addItem(name);
-            }
-        } catch (Exception e) {
-            new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
-        }
     }
     
     public void add_hotel(){
@@ -57,12 +35,14 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
             String query = "INSERT INTO `hotel management system`.`hotel` (`name`, `address`, `Total_floors#`, `Total_rooms#`, `Total_smoke#`) VALUES (?, ?, ?, ?, ?)";
     
+            hotel_name = name.getText();
+            smoke = Integer.valueOf(smoke_num.getText());
             ins_hotel = conn.prepareStatement(query);
-            ins_hotel.setString(1, name.getText());
+            ins_hotel.setString(1, hotel_name);
             ins_hotel.setString(2, address.getText());
             ins_hotel.setInt(3, Integer.valueOf(floor_num.getText()));
             ins_hotel.setInt(4, Integer.valueOf(rooms_num.getText()));
-            ins_hotel.setInt(5, Integer.valueOf(smoke_num.getText()));
+            ins_hotel.setInt(5, smoke);
             
             ins_hotel.executeUpdate();
             
@@ -80,25 +60,19 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
         PreparedStatement ins = null;
         PreparedStatement sel = null;
         ResultSet rs = null;
-        if(selected == null) {
-            hotel_combo.addItem(name.getText());
-            hotel_combo.updateUI();
-        }
+        
         try {
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            System.out.println(selected);
             String query1 = "select * from hotel where name=?";
             sel = conn.prepareStatement(query1);
-            sel.setString(1, selected);
+            sel.setString(1, hotel_name);
             rs = sel.executeQuery();
-            //INSERT INTO Customers (CustomerName, City, Country) SELECT SupplierName, City, Country FROM Suppliers WHERE Country='Germany';
-           
             
             while (rs.next()) {
             int floors_num = rs.getInt("Total_floors#");
             int rooms_num = rs.getInt("Total_rooms#");
-            for (int i = 1; i < floors_num; i++) {
-                for (int j = 1; j < rooms_num/floors_num; j++) {
+            for (int i = 1; i <= floors_num; i++) {
+                for (int j = 1; j <= rooms_num/floors_num; j++) {
                 String query2 = "INSERT INTO `hotel management system`.`rooms` "
                         + "(`hotel`, `floor#`, `room#`, `smoke`, `capacity`)"
                         + " VALUES ("+rs.getInt("hotel_id")+","+i+","+j+","+set_smoke(j)+","+set_capacity(j)+")";
@@ -116,7 +90,7 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
     }
     
     public int set_smoke(int j){
-    if(j%2 == 0) return 0;
+    if(j%smoke == 0) return 0;
     else return 1;
     }
 
@@ -148,15 +122,14 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
         address = new javax.swing.JTextField();
         floor_num = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        update_rooms = new javax.swing.JButton();
         smoke_num = new javax.swing.JTextField();
-        hotel_combo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(40, 120, 200), null));
 
         jPanel5.setBackground(new java.awt.Color(40, 120, 200));
         jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -223,26 +196,10 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
             }
         });
 
-        update_rooms.setBackground(new java.awt.Color(40, 120, 200));
-        update_rooms.setForeground(new java.awt.Color(255, 255, 255));
-        update_rooms.setText("Update Rooms");
-        update_rooms.setBorderPainted(false);
-        update_rooms.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                update_roomsActionPerformed(evt);
-            }
-        });
-
         smoke_num.setBorder(javax.swing.BorderFactory.createTitledBorder("Smoke #"));
         smoke_num.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 smoke_numActionPerformed(evt);
-            }
-        });
-
-        hotel_combo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hotel_comboActionPerformed(evt);
             }
         });
 
@@ -260,13 +217,9 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(floor_num, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rooms_num, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                        .addComponent(rooms_num, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
                         .addGap(10, 10, 10)
-                        .addComponent(smoke_num, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(hotel_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(update_rooms)))
+                        .addComponent(smoke_num, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -284,11 +237,7 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
                     .addComponent(smoke_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hotel_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(update_rooms))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -327,17 +276,6 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
     private void smoke_numActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_smoke_numActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_smoke_numActionPerformed
-
-    private void update_roomsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_update_roomsActionPerformed
-        // TODO add your handling code here:
-        update_rooms();
-    }//GEN-LAST:event_update_roomsActionPerformed
-
-    private void hotel_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hotel_comboActionPerformed
-        // TODO add your handling code here:
-        selected = hotel_combo.getSelectedItem().toString();
-    }//GEN-LAST:event_hotel_comboActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -383,7 +321,6 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField address;
     private javax.swing.JTextField floor_num;
-    private javax.swing.JComboBox<String> hotel_combo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -392,6 +329,5 @@ public class Add_Hotel_Rooms extends javax.swing.JFrame {
     private javax.swing.JTextField name;
     private javax.swing.JTextField rooms_num;
     private javax.swing.JTextField smoke_num;
-    private javax.swing.JButton update_rooms;
     // End of variables declaration//GEN-END:variables
 }

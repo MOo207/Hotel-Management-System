@@ -8,10 +8,20 @@ package myapp.main_frame;
 import myapp.approve_employee.Approve_Employee;
 import myapp.hotel_room_management.Hotel_Room_Management;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Stack;
+import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
+import myapp.Login.Login_Frame;
+import myapp.MyApp;
+import myapp.check_in.Available_Rooms;
 import myapp.check_in.Check_In;
+import myapp.customdialog.Dialog;
 
 /**
  *
@@ -54,6 +64,11 @@ public class Main_Frame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(40, 120, 200), null));
@@ -68,7 +83,7 @@ public class Main_Frame extends javax.swing.JFrame {
         user_name.setText("User");
 
         check_out.setBackground(new java.awt.Color(255, 255, 255));
-        check_out.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
+        check_out.setFont(new java.awt.Font("Sitka Small", 0, 16)); // NOI18N
         check_out.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/icons8-business-report-32.png"))); // NOI18N
         check_out.setText("Check out");
         check_out.setBorderPainted(false);
@@ -78,6 +93,11 @@ public class Main_Frame extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 check_outMouseExited(evt);
+            }
+        });
+        check_out.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                check_outActionPerformed(evt);
             }
         });
 
@@ -113,6 +133,11 @@ public class Main_Frame extends javax.swing.JFrame {
                 edt_btnMouseExited(evt);
             }
         });
+        edt_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edt_btnActionPerformed(evt);
+            }
+        });
 
         sho_btn.setBackground(new java.awt.Color(255, 255, 255));
         sho_btn.setFont(new java.awt.Font("Sitka Small", 0, 18)); // NOI18N
@@ -125,6 +150,11 @@ public class Main_Frame extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 sho_btnMouseExited(evt);
+            }
+        });
+        sho_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sho_btnActionPerformed(evt);
             }
         });
 
@@ -193,7 +223,7 @@ public class Main_Frame extends javax.swing.JFrame {
             }
         });
 
-        notice.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        notice.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         notice.setForeground(new java.awt.Color(153, 153, 153));
         notice.setText("Notice: non-approval employee can't make any proccess ask admin to approve you");
 
@@ -235,8 +265,8 @@ public class Main_Frame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(user_name, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(notice)
-                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(notice, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -251,9 +281,9 @@ public class Main_Frame extends javax.swing.JFrame {
                                     .addComponent(appr_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(50, 50, 50)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(check_out, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(del_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap())))
+                                    .addComponent(del_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(check_out, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(32, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,10 +338,12 @@ public class Main_Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.dispose();
+        new Login_Frame().setVisible(true);
     }//GEN-LAST:event_close_lblMouseClicked
 
     private void del_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_del_btnActionPerformed
         // TODO add your handling code here:
+        new Delete().setVisible(true);
     }//GEN-LAST:event_del_btnActionPerformed
 
     private void del_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_del_btnMouseExited
@@ -389,6 +421,34 @@ public class Main_Frame extends javax.swing.JFrame {
         new Hotel_Room_Management().setVisible(true);
     }//GEN-LAST:event_ho_ro_btnActionPerformed
 
+    private void sho_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sho_btnActionPerformed
+        // TODO add your handling code here:
+        show_transaction();
+    }//GEN-LAST:event_sho_btnActionPerformed
+
+    private void edt_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edt_btnActionPerformed
+        // TODO add your handling code here:
+        new Edit().setVisible(true);
+    }//GEN-LAST:event_edt_btnActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        for (double i = 0; i <= 1; i += 0.1) {
+            String s = i + "";
+            float f = Float.valueOf(s);
+            this.setOpacity(f);
+            try {
+                Thread.sleep(50);
+            } catch(Exception ex){
+            }
+        }
+    }//GEN-LAST:event_formWindowOpened
+
+    private void check_outActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_check_outActionPerformed
+        // TODO add your handling code here:
+        new Check_out().setVisible(true);
+    }//GEN-LAST:event_check_outActionPerformed
+
     public void admin(String name){
     approve_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/icons8-verified-account-48.png")));
     user_name.setText(name);
@@ -430,7 +490,38 @@ public class Main_Frame extends javax.swing.JFrame {
     sho_btn.setEnabled(false);
     appr_btn.setEnabled(false);
     del_btn.setEnabled(false);
+    ho_ro_btn.setEnabled(false);
     }
+   
+  public void show_transaction(){
+    Connection conn = null;
+        PreparedStatement get_transactions = null;
+        ResultSet rs = null;
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String get_hotel_id = "SELECT * FROM `hotel management system`.booking_transaction";
+            get_transactions = conn.prepareStatement(get_hotel_id);
+            rs = get_transactions.executeQuery();
+            
+            Vector columnNames = new Vector();
+            int columns = rs.getMetaData().getColumnCount();
+            for (int i = 0; i < columns; i++) 
+            columnNames.addElement(rs.getMetaData().getColumnName(i + 1));
+            Vector data = new Vector();
+            
+            while (rs.next()) {
+                Vector row = new Vector(columns);
+                for (int i = 0; i < columns; i++) 
+                row.addElement(rs.getObject(i + 1));
+                data.addElement(row);
+            }
+            Show ResultFrame = new Show(data, columnNames);
+            ResultFrame.setVisible(true);
+           
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+}
     
     /**
      * @param args the command line arguments

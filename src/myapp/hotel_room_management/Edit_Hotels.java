@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import myapp.MyApp;
 import myapp.customdialog.Dialog;
+import static myapp.hotel_room_management.Add_Hotel_Rooms.hotel_name;
+import static myapp.hotel_room_management.Add_Hotel_Rooms.smoke;
 
 /**
  *
@@ -50,6 +52,28 @@ public class Edit_Hotels extends javax.swing.JFrame {
         }
     }
     
+    public int get_hotel_id(){
+        int res = 0;
+        Connection conn = null;
+        PreparedStatement hotel_id = null;
+        ResultSet rs = null;
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String get_hotel_id = "select hotel_id from Hotel where name=?";
+            hotel_id = conn.prepareStatement(get_hotel_id);
+            hotel_id.setString(1, selected);
+            rs = hotel_id.executeQuery();
+            
+           while (rs.next()) {                
+            res = rs.getInt("hotel_id");    
+                System.err.println(rs.getInt("hotel_id"));
+            }
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+        return res;
+    }
+    
     public void edit_hotel(String selected){
         Connection conn = null;
         PreparedStatement ins_hotel = null;
@@ -67,7 +91,7 @@ public class Edit_Hotels extends javax.swing.JFrame {
             ins_hotel.setString(6, selected);
             
             ins_hotel.executeUpdate();
-            
+            update_rooms();
             new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, "Hotel Edited!").setVisible(true);
         } catch(Exception e){
         java.awt.Dialog d = new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, e.toString());
@@ -75,6 +99,68 @@ public class Edit_Hotels extends javax.swing.JFrame {
         }
         
     }
+    
+    public void update_rooms(){
+        Connection conn = null;
+        PreparedStatement del_booked_room = null;
+        PreparedStatement del_room = null;
+        PreparedStatement ins = null;
+        PreparedStatement sel = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String del_query ="delete from booked_rooms where guest_id =1";
+            del_booked_room = conn.prepareStatement(del_query);
+            del_booked_room.executeUpdate();
+            
+            String del_query2 ="delete from Rooms where hotel =?";
+            del_room = conn.prepareStatement(del_query2);
+            del_room.setInt(1, get_hotel_id());
+            del_room.executeUpdate();
+        
+            String query1 = "select * from hotel where name=?";
+            sel = conn.prepareStatement(query1);
+            System.err.println(selected);
+            sel.setString(1, name.getText());
+            rs = sel.executeQuery();
+            
+            while (rs.next()) {
+            int floors_num = Integer.valueOf(floor_num.getText());
+            int rooms_num = Integer.valueOf(this.rooms_num.getText());
+            for (int i = 1; i <= floors_num; i++) {
+                for (int j = 1; j <= rooms_num/floors_num; j++) {
+                String query2 = "INSERT INTO `hotel management system`.`rooms` "
+                        + "(`hotel`, `floor#`, `room#`, `smoke`, `capacity`)"
+                        + " VALUES ("+rs.getInt("hotel_id")+","+i+","+j+","+set_smoke(j)+","+set_capacity(j)+")";
+                        ins = conn.prepareStatement(query2);
+                        ins.executeUpdate();
+                }
+            }
+            }
+            new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, " Hotel Rooms Updated!").setVisible(true);
+        } catch(Exception e){
+        java.awt.Dialog d = new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, e.toString());
+        d.setVisible(true);
+        }
+        
+    }
+    
+    public int set_smoke(int j){
+    if(j%2 == 0) return 0;
+    else return 1;
+    }
+
+    public int set_capacity(int j){
+        int capacity = 0;
+        for (int i = 0; i < j; i++) {
+        if(j%3 == 1) return capacity = 1;
+        else if(j%3 == 2) return capacity = 2;
+        else return capacity = 3;
+        }
+        return capacity;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

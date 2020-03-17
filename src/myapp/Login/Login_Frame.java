@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import myapp.Global_Var;
 import myapp.customdialog.Dialog;
 import myapp.main_frame.Main_Frame;
 import myapp.MyApp;
@@ -32,7 +33,6 @@ public class Login_Frame extends javax.swing.JFrame {
     /**
      * Creates new form Signin_form
      */
-    public static String agent_name;
     public Login_Frame() {
         initComponents();
     }
@@ -46,27 +46,23 @@ public class Login_Frame extends javax.swing.JFrame {
 //    }
 
     public void login() throws Exception {
-
+       
         Connection conn = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
 
         try {
+            Global_Var.agent_name = userName_Txt.getText();
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
             String sql = "select * from agents WHERE `agents`.`name`=? and `agents`.`password`=?";
-
+           
             preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, userName_Txt.getText());
+            preparedStatement.setString(1, Global_Var.agent_name);
              preparedStatement.setString(2, password_Txt.getText());
             rs = preparedStatement.executeQuery();
-
-            getUserName_Txt();
             
             if (rs.next()) {
-                System.out.println(rs.getString(1)+rs.getString(2)+rs.getString(3)+rs.getString(4)+rs.getString(5));
                 String Password = rs.getString("password");
-                System.err.println(Password+password_Txt.getText());
-                System.err.println(rs.getString(5)+1);
                 if (password_Txt.getText().equals(Password) && rs.getString(5).equals("Admin")) {
                     Main_Frame gui = new Main_Frame();
                     gui.admin(rs.getString("name"));
@@ -79,7 +75,7 @@ public class Login_Frame extends javax.swing.JFrame {
                     gui.setLocationRelativeTo(null);
                     gui.setVisible(true);
                     this.dispose();
-            } else if(password_Txt.getText().equals(Password) && rs.getString(5).equals("Approved")){
+            } else if(password_Txt.getText().equals(Password) && rs.getString(5).equals("Aproval")){
                 Main_Frame gui = new Main_Frame();
                     gui.approved_emp(rs.getString("name"));
                     gui.setLocationRelativeTo(null);
@@ -108,11 +104,6 @@ public class Login_Frame extends javax.swing.JFrame {
         }
     }
 
-    public String getUserName_Txt() {
-        return agent_name = userName_Txt.getText();
-    }
-
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -185,6 +176,11 @@ public class Login_Frame extends javax.swing.JFrame {
                 userName_TxtMouseExited(evt);
             }
         });
+        userName_Txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userName_TxtActionPerformed(evt);
+            }
+        });
 
         password_Txt.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         password_Txt.setBorder(null);
@@ -227,6 +223,12 @@ public class Login_Frame extends javax.swing.JFrame {
         Signup_label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Signup_labelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Signup_labelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Signup_labelMouseExited(evt);
             }
         });
 
@@ -275,6 +277,12 @@ public class Login_Frame extends javax.swing.JFrame {
         forget_password.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 forget_passwordMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                forget_passwordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                forget_passwordMouseExited(evt);
             }
         });
 
@@ -484,6 +492,30 @@ public class Login_Frame extends javax.swing.JFrame {
         jSep2.setBackground(new Color(204,204,204));
         jSep2.setForeground(new Color(204,204,204));
     }//GEN-LAST:event_password_TxtMouseExited
+
+    private void userName_TxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userName_TxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userName_TxtActionPerformed
+
+    private void forget_passwordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forget_passwordMouseEntered
+        // TODO add your handling code here:
+        forget_password.setForeground(new Color(102,102,102));
+    }//GEN-LAST:event_forget_passwordMouseEntered
+
+    private void forget_passwordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forget_passwordMouseExited
+        // TODO add your handling code here:
+        forget_password.setForeground(new Color(153,153,153));
+    }//GEN-LAST:event_forget_passwordMouseExited
+
+    private void Signup_labelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Signup_labelMouseEntered
+        // TODO add your handling code here:
+          Signup_label.setForeground(new Color(102,102,102));
+    }//GEN-LAST:event_Signup_labelMouseEntered
+
+    private void Signup_labelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Signup_labelMouseExited
+        // TODO add your handling code here:
+         Signup_label.setForeground(new Color(153,153,153));
+    }//GEN-LAST:event_Signup_labelMouseExited
 
     /**
      * @param args the command line arguments

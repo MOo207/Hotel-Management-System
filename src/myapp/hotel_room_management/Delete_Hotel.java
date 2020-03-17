@@ -176,6 +176,7 @@ public class Delete_Hotel extends javax.swing.JFrame {
                     .addComponent(jLabel2)))
         );
 
+        hotel_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hotel" }));
         hotel_combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 hotel_comboActionPerformed(evt);

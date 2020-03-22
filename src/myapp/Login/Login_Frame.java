@@ -58,7 +58,7 @@ public class Login_Frame extends javax.swing.JFrame {
            
             preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, Global_Var.agent_name);
-             preparedStatement.setString(2, password_Txt.getText());
+            preparedStatement.setString(2, password_Txt.getText());
             rs = preparedStatement.executeQuery();
             
             if (rs.next()) {
@@ -69,13 +69,13 @@ public class Login_Frame extends javax.swing.JFrame {
                     gui.setLocationRelativeTo(null);
                     gui.setVisible(true);
                     this.dispose();
-                } else if(password_Txt.getText().equals(Password) && rs.getString(5).equals("Non_Approval")){
+                } else if(password_Txt.getText().equals(Password) && rs.getString(5).equals("Non-Approved")){
                 Main_Frame gui = new Main_Frame();
                     gui.not_approved_emp(rs.getString("name"));
                     gui.setLocationRelativeTo(null);
                     gui.setVisible(true);
                     this.dispose();
-            } else if(password_Txt.getText().equals(Password) && rs.getString(5).equals("Aproval")){
+            } else if(password_Txt.getText().equals(Password) && rs.getString(5).equals("Approved")){
                 Main_Frame gui = new Main_Frame();
                     gui.approved_emp(rs.getString("name"));
                     gui.setLocationRelativeTo(null);

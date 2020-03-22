@@ -1,0 +1,17 @@
+	agent a
+	from hotel operoi 
+    Welcome you sir ali 
+******************************
+                              
+   You stayed: 3 days
+   Booked Room: 5
+  Capacity of Room: 2
+			     
+******************************
+   This will cost you: 600$   
+    After tax 5%: 30 
+******************************
+   We hope you enjoyed	     
+   with Accommodation        
+   Thank You! for your trust  
+******************************

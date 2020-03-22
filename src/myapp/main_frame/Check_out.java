@@ -5,14 +5,16 @@
  */
 package myapp.main_frame;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import myapp.MyApp;
 import myapp.customdialog.Dialog;
-import static myapp.main_frame.Edit.from_date;
-import static myapp.main_frame.Edit.to_date;
+
 
 /**
  *
@@ -32,7 +34,7 @@ public class Check_out extends javax.swing.JFrame {
     public void check_out(){
         Connection conn = null;
         PreparedStatement check_out = null;
-        PreparedStatement del_broom = null;
+        
         try {
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
             String query ="UPDATE `hotel management system`.`booking_transaction` SET `status` = ? WHERE (`guest` = ?)";
@@ -43,8 +45,9 @@ public class Check_out extends javax.swing.JFrame {
             
             check_out.executeUpdate();
             
+            open_receipt();
     
-            new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, "Reservation Details Edited!").setVisible(true);
+            new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, "You are checked out!").setVisible(true);
         } catch(Exception e){
         java.awt.Dialog d = new myapp.customdialog.Dialog(this, rootPaneCheckingEnabled, e.toString());
         d.setVisible(true);
@@ -52,6 +55,25 @@ public class Check_out extends javax.swing.JFrame {
         
     }
 
+    public void open_receipt() throws IOException{
+      File file = new File("C:\\Users\\Mohammed Al 3mawy\\Documents\\NetBeansProjects\\MyApp\\Receipts\\"+Selected_guest+".txt");
+        
+        //first check if Desktop is supported by Platform or not
+        if(!Desktop.isDesktopSupported()){
+            System.out.println("Desktop is not supported");
+            return;
+        }
+        
+        Desktop desktop = Desktop.getDesktop();
+        if(file.exists()) desktop.open(file);
+        
+        //let's try to open PDF file
+        file = new File("/Users/pankaj/java.pdf");
+        if(file.exists()) desktop.open(file);
+    }
+
+
+    
     public void get_guests() {
         Connection conn = null;
         PreparedStatement get_guest = null;

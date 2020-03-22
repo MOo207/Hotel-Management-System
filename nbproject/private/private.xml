@@ -3,11 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/main_frame/Main_Frame.java</file>
-            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/check_in/Check_In.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/main_frame/Show.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/approve_employee/Approve_Employee.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/main_frame/Delete.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/Global_Var.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/hotel_room_management/Add_Hotel_Rooms.java</file>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/MyApp.java</file>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/Login/Login_Frame.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/main_frame/Main_Frame.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/main_frame/Check_out.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/check_in/Check_In.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/customdialog/Dialog.java</file>
             <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/check_in/Available_Rooms.java</file>
+            <file>file:/C:/Users/Mohammed%20Al%203mawy/Documents/NetBeansProjects/MyApp/src/myapp/DBmanager.java</file>
         </group>
     </open-files>
 </project-private>

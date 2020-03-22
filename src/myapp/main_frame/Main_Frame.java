@@ -54,12 +54,12 @@ public class Main_Frame extends javax.swing.JFrame {
         sho_btn = new javax.swing.JButton();
         del_btn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        close_lbl = new javax.swing.JLabel();
         appr_btn = new javax.swing.JButton();
         notice = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         ho_ro_btn = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        logout = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -181,38 +181,6 @@ public class Main_Frame extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Reservation Main Menu");
 
-        jPanel5.setBackground(new java.awt.Color(40, 120, 200));
-        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel5MouseClicked(evt);
-            }
-        });
-
-        close_lbl.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        close_lbl.setForeground(new java.awt.Color(255, 255, 255));
-        close_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        close_lbl.setText("X");
-        close_lbl.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                close_lblMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addComponent(close_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(close_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
         appr_btn.setBackground(new java.awt.Color(255, 255, 255));
         appr_btn.setFont(new java.awt.Font("Sitka Small", 0, 14)); // NOI18N
         appr_btn.setForeground(new java.awt.Color(255, 255, 255));
@@ -248,60 +216,89 @@ public class Main_Frame extends javax.swing.JFrame {
             }
         });
 
+        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel10MouseClicked(evt);
+            }
+        });
+
+        logout.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        logout.setForeground(new java.awt.Color(40, 120, 200));
+        logout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/icons8-logout-rounded-up-48.png"))); // NOI18N
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(logout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(ho_ro_btn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(sho_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(new_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(edt_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(appr_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(del_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(check_out, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 24, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(163, 163, 163)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addComponent(approve_icon, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(user_name, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(notice, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(ho_ro_btn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(sho_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(new_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(50, 50, 50)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(edt_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(appr_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(50, 50, 50)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(del_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(check_out, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(32, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(approve_icon)
+                    .addComponent(user_name)
+                    .addComponent(notice, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(20, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(approve_icon)
-                            .addComponent(user_name)
-                            .addComponent(notice, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jLabel3)
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(check_out, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                    .addComponent(appr_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                    .addComponent(appr_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(new_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -312,7 +309,7 @@ public class Main_Frame extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(ho_ro_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(47, 47, 47))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -323,23 +320,47 @@ public class Main_Frame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 20, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel5MouseClicked
+        for (double i = 0; i <= 1; i += 0.1) {
+            String s = i + "";
+            float f = Float.valueOf(s);
+            this.setOpacity(f);
+            try {
+                Thread.sleep(50);
+            } catch(Exception ex){
+            }
+        }
+    }//GEN-LAST:event_formWindowOpened
 
-    private void close_lblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_close_lblMouseClicked
+    private void ho_ro_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ho_ro_btnActionPerformed
         // TODO add your handling code here:
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.dispose();
-        new Login_Frame().setVisible(true);
-    }//GEN-LAST:event_close_lblMouseClicked
+        new Hotel_Room_Management().setVisible(true);
+    }//GEN-LAST:event_ho_ro_btnActionPerformed
+
+    private void ho_ro_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ho_ro_btnMouseExited
+        // TODO add your handling code here:
+        ho_ro_btn.setBackground(Color.white);
+    }//GEN-LAST:event_ho_ro_btnMouseExited
+
+    private void ho_ro_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ho_ro_btnMouseEntered
+        // TODO add your handling code here:
+        ho_ro_btn.setBackground(new Color(40, 120, 200));
+    }//GEN-LAST:event_ho_ro_btnMouseEntered
+
+    private void appr_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appr_btnActionPerformed
+        // TODO add your handling code here:
+        new Approve_Employee().setVisible(true);
+    }//GEN-LAST:event_appr_btnActionPerformed
 
     private void del_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_del_btnActionPerformed
         // TODO add your handling code here:
@@ -348,13 +369,18 @@ public class Main_Frame extends javax.swing.JFrame {
 
     private void del_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_del_btnMouseExited
         // TODO add your handling code here:
-    del_btn.setBackground(Color.white);
+        del_btn.setBackground(Color.white);
     }//GEN-LAST:event_del_btnMouseExited
 
     private void del_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_del_btnMouseEntered
         // TODO add your handling code here:
-    del_btn.setBackground(new Color(40, 120, 200));
+        del_btn.setBackground(new Color(40, 120, 200));
     }//GEN-LAST:event_del_btnMouseEntered
+
+    private void sho_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sho_btnActionPerformed
+        // TODO add your handling code here:
+        new Show().setVisible(true);
+    }//GEN-LAST:event_sho_btnActionPerformed
 
     private void sho_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sho_btnMouseExited
         // TODO add your handling code here:
@@ -365,6 +391,11 @@ public class Main_Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
         sho_btn.setBackground(new Color(40, 120, 200));
     }//GEN-LAST:event_sho_btnMouseEntered
+
+    private void edt_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edt_btnActionPerformed
+        // TODO add your handling code here:
+        new Edit().setVisible(true);
+    }//GEN-LAST:event_edt_btnActionPerformed
 
     private void edt_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edt_btnMouseExited
         // TODO add your handling code here:
@@ -391,6 +422,11 @@ public class Main_Frame extends javax.swing.JFrame {
         new_btn.setBackground(new Color(40, 120, 200));
     }//GEN-LAST:event_new_btnMouseEntered
 
+    private void check_outActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_check_outActionPerformed
+        // TODO add your handling code here:
+        new Check_out().setVisible(true);
+    }//GEN-LAST:event_check_outActionPerformed
+
     private void check_outMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_check_outMouseExited
         // TODO add your handling code here:
         check_out.setBackground(Color.white);
@@ -401,53 +437,15 @@ public class Main_Frame extends javax.swing.JFrame {
         check_out.setBackground(new Color(40, 120, 200));
     }//GEN-LAST:event_check_outMouseEntered
 
-    private void appr_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_appr_btnActionPerformed
+    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
         // TODO add your handling code here:
-        new Approve_Employee().setVisible(true);
-    }//GEN-LAST:event_appr_btnActionPerformed
+    }//GEN-LAST:event_jPanel10MouseClicked
 
-    private void ho_ro_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ho_ro_btnMouseEntered
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
         // TODO add your handling code here:
-        ho_ro_btn.setBackground(new Color(40, 120, 200));
-    }//GEN-LAST:event_ho_ro_btnMouseEntered
-
-    private void ho_ro_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ho_ro_btnMouseExited
-        // TODO add your handling code here:
-        ho_ro_btn.setBackground(Color.white);
-    }//GEN-LAST:event_ho_ro_btnMouseExited
-
-    private void ho_ro_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ho_ro_btnActionPerformed
-        // TODO add your handling code here:
-        new Hotel_Room_Management().setVisible(true);
-    }//GEN-LAST:event_ho_ro_btnActionPerformed
-
-    private void sho_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sho_btnActionPerformed
-        // TODO add your handling code here:
-        show_transaction();
-    }//GEN-LAST:event_sho_btnActionPerformed
-
-    private void edt_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edt_btnActionPerformed
-        // TODO add your handling code here:
-        new Edit().setVisible(true);
-    }//GEN-LAST:event_edt_btnActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:
-        for (double i = 0; i <= 1; i += 0.1) {
-            String s = i + "";
-            float f = Float.valueOf(s);
-            this.setOpacity(f);
-            try {
-                Thread.sleep(50);
-            } catch(Exception ex){
-            }
-        }
-    }//GEN-LAST:event_formWindowOpened
-
-    private void check_outActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_check_outActionPerformed
-        // TODO add your handling code here:
-        new Check_out().setVisible(true);
-    }//GEN-LAST:event_check_outActionPerformed
+        this.dispose();
+        new Login_Frame().setVisible(true);
+    }//GEN-LAST:event_logoutMouseClicked
 
     public void admin(String name){
     approve_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/icons8-verified-account-48.png")));
@@ -471,13 +469,15 @@ public class Main_Frame extends javax.swing.JFrame {
     
     public void approved_emp(String name){
     approve_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/icons8-verified-account-48.png")));
+    appr_btn.setEnabled(false);
     user_name.setText(name);
     notice.setText("");
     }
     
     public void not_approved_emp(String name){
      jPanel1.setBorder(BorderFactory.createEtchedBorder(Color.red, null));
-     jPanel5.setBackground(Color.red);
+     logout.setBackground(Color.white);
+     logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/icons8-logout-rounded-up-red-48.png")));
      jSeparator1.setBackground(Color.red);
      jSeparator1.setForeground(Color.red);
     approve_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/myapp/assets/red-verified-account-48.png")));
@@ -493,35 +493,7 @@ public class Main_Frame extends javax.swing.JFrame {
     ho_ro_btn.setEnabled(false);
     }
    
-  public void show_transaction(){
-    Connection conn = null;
-        PreparedStatement get_transactions = null;
-        ResultSet rs = null;
-        try {
-            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            String get_hotel_id = "SELECT * FROM `hotel management system`.booking_transaction";
-            get_transactions = conn.prepareStatement(get_hotel_id);
-            rs = get_transactions.executeQuery();
-            
-            Vector columnNames = new Vector();
-            int columns = rs.getMetaData().getColumnCount();
-            for (int i = 0; i < columns; i++) 
-            columnNames.addElement(rs.getMetaData().getColumnName(i + 1));
-            Vector data = new Vector();
-            
-            while (rs.next()) {
-                Vector row = new Vector(columns);
-                for (int i = 0; i < columns; i++) 
-                row.addElement(rs.getObject(i + 1));
-                data.addElement(row);
-            }
-            Show ResultFrame = new Show(data, columnNames);
-            ResultFrame.setVisible(true);
-           
-        } catch (Exception e) {
-            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
-        }
-}
+  
     
     /**
      * @param args the command line arguments
@@ -562,14 +534,18 @@ public class Main_Frame extends javax.swing.JFrame {
     private javax.swing.JButton appr_btn;
     private javax.swing.JLabel approve_icon;
     private javax.swing.JButton check_out;
-    private javax.swing.JLabel close_lbl;
+    private javax.swing.JLabel close_lbl4;
+    private javax.swing.JLabel close_lbl5;
     private javax.swing.JButton del_btn;
     private javax.swing.JButton edt_btn;
     private javax.swing.JButton ho_ro_btn;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel logout;
     private javax.swing.JButton new_btn;
     private javax.swing.JLabel notice;
     private javax.swing.JButton sho_btn;

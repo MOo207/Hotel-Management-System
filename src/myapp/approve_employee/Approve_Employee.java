@@ -37,7 +37,7 @@ public class Approve_Employee extends javax.swing.JFrame {
 
         try {
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            String sql = "select name from agents WHERE type='Non_Approval'";
+            String sql = "select name from agents WHERE type='Non-Approved'";
 
             preparedStatement = conn.prepareStatement(sql);
 
@@ -61,7 +61,7 @@ public class Approve_Employee extends javax.swing.JFrame {
         ResultSet rs = null;
     try {
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            String sql = "select name from agents WHERE type='Aproval'";
+            String sql = "select name from agents WHERE type='Approved'";
 
             preparedStatement = conn.prepareStatement(sql);
 
@@ -87,13 +87,14 @@ public class Approve_Employee extends javax.swing.JFrame {
 
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
             String update_query = "UPDATE `hotel management system`.`agents` SET `type` = 3 WHERE (`name` = ?);";
-            String sel = "select name from agents WHERE type='Non_Approval'";
+            String sel = "select name from agents WHERE type='Non-Approved'";
 
             
             sel_name = conn.prepareStatement(sel);
             rs = sel_name.executeQuery();
          
-            while (rs.next()) {                
+            
+            while (rs.next() !=  false) {                
                
                 if(rs.getString("name").equals(selected)){
                     ins_appr = conn.prepareStatement(update_query);
@@ -110,7 +111,7 @@ public class Approve_Employee extends javax.swing.JFrame {
             appr_combo.updateUI();
             
         } catch (Exception e) {
-            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+            new Dialog(this, rootPaneCheckingEnabled, "You didn't choose any thing!").setVisible(true);
         }
 
     }
@@ -148,7 +149,7 @@ public class Approve_Employee extends javax.swing.JFrame {
             new Dialog(this, rootPaneCheckingEnabled, "Done!").setVisible(true);
            
         } catch (Exception e) {
-            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+            new Dialog(this, rootPaneCheckingEnabled, "You didn't choose any thing!").setVisible(true);
         }
 
     }
@@ -186,6 +187,7 @@ public class Approve_Employee extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel2.setText("Disapprove:");
 
+        appr_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
         appr_combo.setBorder(null);
         appr_combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,7 +195,7 @@ public class Approve_Employee extends javax.swing.JFrame {
             }
         });
 
-        disap_combo.setSelectedIndex(-1);
+        disap_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
         disap_combo.setBorder(null);
         disap_combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,10 +277,9 @@ public class Approve_Employee extends javax.swing.JFrame {
                 .addGap(63, 63, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Disapprove_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(appr_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(disap_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Approve_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
+                    .addComponent(appr_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(disap_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Approve_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
                 .addGap(87, 87, 87))
         );
         jPanel1Layout.setVerticalGroup(
@@ -291,7 +292,7 @@ public class Approve_Employee extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(Approve_btn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(disap_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))

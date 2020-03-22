@@ -7,25 +7,23 @@ package myapp.check_in;
 
 import myapp.datepicker.DatePicker;
 import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import myapp.MyApp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import javax.swing.JFrame;
-import myapp.Login.Login_Frame;
-import myapp.customdialog.Dialog;
-import myapp.main_frame.Main_Frame;
-import java.text.SimpleDateFormat;  
+import myapp.customdialog.Dialog; 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Stack;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JCheckBox;
 import myapp.Global_Var;
 /**
  *
@@ -34,6 +32,8 @@ import myapp.Global_Var;
 public class Check_In extends javax.swing.JFrame {
     String selected_hotel;
     String Selected_guest;
+    int period;
+    int capacity;
     static LocalDate from_date;
     static LocalDate to_date;
     
@@ -51,8 +51,9 @@ public class Check_In extends javax.swing.JFrame {
         Connection conn = null;
         PreparedStatement make_booking;
         try {
+            test();
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            String make_booking_query = "INSERT INTO `hotel management system`.`booking_transaction` (`hotel`, `guest`, `agent`, `bookedroom`, `from`, `to`, `status`) VALUES ( ? , ? , ? , ? , ? , ? , ?)";
+            String make_booking_query = "INSERT INTO `hotel management system`.`booking_transaction` (`hotel`, `guest`, `agent`, `bookedroom`, `from`, `to`, `status`,`cost`) VALUES ( ? , ? , ? , ? , ? , ? , ?, ?)";
             make_booking = conn.prepareStatement(make_booking_query);
             make_booking.setInt(1, get_hotel_id());
             make_booking.setInt(2, get_guest_id());
@@ -60,21 +61,49 @@ public class Check_In extends javax.swing.JFrame {
             make_booking.setInt(4, get_bookedroom_id());
             make_booking.setDate(5, java.sql.Date.valueOf(from_date));
             make_booking.setDate(6, java.sql.Date.valueOf(to_date));
-            make_booking.setInt(7, 1);
+            make_booking.setInt(7, status_combo.getSelectedIndex());
+            make_booking.setInt(8, get_cost());
             make_booking.executeUpdate();
             
             test();
             
-            new Dialog(this, rootPaneCheckingEnabled, "Check in Done!").setVisible(true);
+            new Dialog(this, rootPaneCheckingEnabled, "You are checked in!").setVisible(true);
+            receipt();
         } catch(SQLException e){
             new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
         }
         
     }
     
+    public void receipt() throws IOException{
+    File file = new File("C:\\Users\\Mohammed Al 3mawy\\Documents\\NetBeansProjects\\MyApp\\Receipts\\"+Selected_guest+".txt");
+    FileWriter fw = new FileWriter(file);
+    BufferedWriter writer = new BufferedWriter(fw);
+ writer.write(
+"	agent "+Global_Var.agent_name+"\n" +
+"	from hotel "+selected_hotel+" \n" +
+"    Welcome you sir "+Selected_guest+" \n" +
+"******************************\n" +
+"                              \n" +
+"   You stayed: "+period+" days\n" +
+"   Booked Room: "+ get_bookedroom_id()+"\n" +
+"  Capacity of Room: "+capacity+"\n" +
+"			     \n" +
+"******************************\n" +
+"   This will cost you: "+get_cost()+"$   \n" +
+"    After tax 5%: "+get_cost()*5/100+get_cost()+"$ \n" +
+"******************************\n" +
+"   We hope you enjoyed	     \n" +
+"   with Accommodation        \n" +
+"   Thank You! for your trust  \n" +
+"******************************");
+ writer.close();
+    }
+    
     public void test(){
-        System.err.println(
-             get_hotel_id()+" guest: "
+        System.err.println("cost "+
+            get_cost()+ " hotel: "+
+            +get_hotel_id()+" guest: "
             +get_guest_id()+" agent: "
             +get_agent_id()+" bookedroom: "
             +get_bookedroom_id());
@@ -90,14 +119,50 @@ public class Check_In extends javax.swing.JFrame {
             String insert_guest = "INSERT INTO Guests(name,address,phone) values(?,?,?)";
             
             new_guest_query = conn.prepareStatement(insert_guest);
-            new_guest_query.setString(1, Global_Var.agent_name);
+            new_guest_query.setString(1, gu_name.getText());
             new_guest_query.setString(2, gu_address.getText());
             new_guest_query.setString(3, gu_phone.getText());
             new_guest_query.executeUpdate();
             
+            guest_combo.addItem(gu_name.getText());
+            guest_combo.updateUI();
+            
+            new Dialog(this, rootPaneCheckingEnabled, "Guest inserted successfully").setVisible(true);
         } catch (Exception e) {
             new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
         }
+    }
+    
+    public int get_cost(){
+    int res = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        PreparedStatement ps2 = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        try {
+            conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
+            String get_room_no = "select room_id from booked_rooms where `guest_id`=?";
+            ps = conn.prepareStatement(get_room_no);
+            ps.setInt(1, get_guest_id());
+            rs = ps.executeQuery();
+            
+             while (rs.next()) {                
+            String get_cost = "select cost from rooms where room_id=?";
+            ps2 = conn.prepareStatement(get_cost);
+            ps2.setInt(1, rs.getInt("room_id"));
+            rs2 = ps2.executeQuery();
+            while(rs2.next()){
+            res += rs2.getDouble("cost");
+            }
+            
+            }
+             
+        } catch (Exception e) {
+            new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
+        }
+        period = Period.between(from_date, to_date).getDays();
+        return res*period;
     }
     
     public int get_guest_id(){
@@ -148,17 +213,17 @@ public class Check_In extends javax.swing.JFrame {
         int res = 0;
         Connection conn = null;
        PreparedStatement query = null;
-        ResultSet agent_id = null;
+        ResultSet get_broom_id = null;
         try {
              conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            String get_agent_id = "SELECT bookedroom_id FROM booked_rooms WHERE (guest_id=?)";
+            String broom_id = "SELECT bookedrooms_id FROM booked_rooms WHERE (guest_id=?)";
             
-            query = conn.prepareStatement(get_agent_id);
+            query = conn.prepareStatement(broom_id);
             
             query.setInt(1, get_guest_id());
-            agent_id = query.executeQuery();
-            while (agent_id.next()) {                
-            res = agent_id.getInt("bookedroom_id");
+            get_broom_id = query.executeQuery();
+            while (get_broom_id.next()) {                
+            res = get_broom_id.getInt("bookedrooms_id");
             }
         } catch (SQLException e) {
             new Dialog(this, rootPaneCheckingEnabled, e.toString()).setVisible(true);
@@ -192,18 +257,13 @@ public class Check_In extends javax.swing.JFrame {
         Connection conn = null;
         PreparedStatement rooms_book = null;
         ResultSet rs = null;
-        int capacity = 0;
-        boolean smoking = false;
         try {
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
             String select = "select * from Rooms where hotel=? and capacity=? and smoke=? and status=1";
             
-            capacity = Integer.valueOf(this.capacity.getText());
-            smoking = this.smoking.isSelected();
-            
             rooms_book = conn.prepareStatement(select);
             rooms_book.setInt(1, get_hotel_id());
-            rooms_book.setInt(2, capacity);
+            rooms_book.setInt(2, this.capacity);
             rooms_book.setInt(3, set_smoking());
             
             rs = rooms_book.executeQuery();
@@ -225,21 +285,20 @@ public class Check_In extends javax.swing.JFrame {
             Available_Rooms ResultFrame = new Available_Rooms(data, columnNames);
             ResultFrame.setVisible(true);
             
-            int room_num = Integer.valueOf(rooms.getText());
+            int room_num = Integer.valueOf(rooms_no.getText());
             while(room_num !=0){
                 room_num--;
                 
                 int chosen_room = rooms_id.pop();
+                
         PreparedStatement insert_booked_rooms = null;
-
         PreparedStatement update_state = null;
-
         try {
             
             conn = DriverManager.getConnection(MyApp.DB_URL, MyApp.USER, MyApp.PASS);
-            String insert_guest = "INSERT INTO `hotel management system`.`booked_rooms` (`guest_id`, `room_id`) VALUES (?, ?)";
+            String insert = "INSERT INTO `hotel management system`.`booked_rooms` (`guest_id`, `room_id`) VALUES (?, ?)";
             
-            insert_booked_rooms = conn.prepareStatement(insert_guest);
+            insert_booked_rooms = conn.prepareStatement(insert);
             insert_booked_rooms.setInt(1, get_guest_id());
             insert_booked_rooms.setInt(2, chosen_room);
             insert_booked_rooms.executeUpdate();
@@ -334,11 +393,10 @@ public class Check_In extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         gu_phone = new javax.swing.JTextField();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        status_combo = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        capacity = new javax.swing.JTextField();
         smoking = new javax.swing.JCheckBox();
-        rooms = new javax.swing.JTextField();
+        rooms_no = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         pick_from = new javax.swing.JButton();
         pick_to = new javax.swing.JButton();
@@ -347,6 +405,7 @@ public class Check_In extends javax.swing.JFrame {
         reserve_room = new javax.swing.JButton();
         add_guest = new javax.swing.JButton();
         hotel_combo = new javax.swing.JComboBox<>();
+        capacity_combo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -423,16 +482,14 @@ public class Check_In extends javax.swing.JFrame {
 
         gu_phone.setBorder(javax.swing.BorderFactory.createTitledBorder("Guest Phone"));
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Confirmed", "Cancled" }));
-        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+        status_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Status", "Confirmed", "Cancled" }));
+        status_combo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
+                status_comboActionPerformed(evt);
             }
         });
 
         jLabel7.setText("Reservation info");
-
-        capacity.setBorder(javax.swing.BorderFactory.createTitledBorder("Guests No."));
 
         smoking.setBackground(new java.awt.Color(255, 255, 255));
         smoking.setText("Smoke Room");
@@ -442,7 +499,7 @@ public class Check_In extends javax.swing.JFrame {
             }
         });
 
-        rooms.setBorder(javax.swing.BorderFactory.createTitledBorder("Rooms No."));
+        rooms_no.setBorder(javax.swing.BorderFactory.createTitledBorder("Rooms No."));
 
         jButton1.setBackground(new java.awt.Color(40, 120, 200));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -505,11 +562,43 @@ public class Check_In extends javax.swing.JFrame {
             }
         });
 
+        capacity_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Capacity", "Individual", "Double Room", "Triple Room", "Family Room" }));
+        capacity_combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                capacity_comboActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(add_guest))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(status_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(to, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(from, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(pick_from)
+                                    .addComponent(pick_to))))))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(smoking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(reserve_room, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(87, 87, 87))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -520,44 +609,16 @@ public class Check_In extends javax.swing.JFrame {
                             .addComponent(jLabel7)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(38, 38, 38)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hotel_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(gu_phone, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(gu_address, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(gu_name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(guest_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(capacity, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(rooms, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(42, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(smoking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(reserve_room, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(87, 87, 87))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(to, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(from, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pick_from)
-                                    .addComponent(pick_to)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(add_guest)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(hotel_combo, 0, 186, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(gu_phone, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(gu_address, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(gu_name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(guest_combo, 0, 186, Short.MAX_VALUE)
+                            .addComponent(capacity_combo, 0, 186, Short.MAX_VALUE)
+                            .addComponent(rooms_no))))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -580,12 +641,12 @@ public class Check_In extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(hotel_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(capacity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rooms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(capacity_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(smoking, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
+                .addComponent(rooms_no, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(smoking)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(reserve_room)
                 .addGap(16, 16, 16)
                 .addComponent(jLabel7)
@@ -598,10 +659,10 @@ public class Check_In extends javax.swing.JFrame {
                     .addComponent(pick_to, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(to, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(status_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -634,9 +695,9 @@ public class Check_In extends javax.swing.JFrame {
         Selected_guest = guest_combo.getSelectedItem().toString();
     }//GEN-LAST:event_guest_comboActionPerformed
 
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+    private void status_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_status_comboActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox4ActionPerformed
+    }//GEN-LAST:event_status_comboActionPerformed
 
     private void gu_addressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gu_addressActionPerformed
         // TODO add your handling code here:
@@ -673,7 +734,6 @@ public class Check_In extends javax.swing.JFrame {
 
     private void add_guestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_guestActionPerformed
         // TODO add your handling code here:
-//        test();
         insert_geust();
     }//GEN-LAST:event_add_guestActionPerformed
 
@@ -704,6 +764,11 @@ public class Check_In extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void capacity_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_capacity_comboActionPerformed
+        // TODO add your handling code here:
+        capacity = capacity_combo.getSelectedIndex();
+    }//GEN-LAST:event_capacity_comboActionPerformed
      /**
      * @param args the command line arguments
      */
@@ -742,7 +807,7 @@ public class Check_In extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton add_guest;
-    private javax.swing.JTextField capacity;
+    private javax.swing.JComboBox<String> capacity_combo;
     private javax.swing.JLabel from;
     private javax.swing.JTextField gu_address;
     private javax.swing.JTextField gu_name;
@@ -750,7 +815,6 @@ public class Check_In extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> guest_combo;
     private javax.swing.JComboBox<String> hotel_combo;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -761,8 +825,9 @@ public class Check_In extends javax.swing.JFrame {
     private javax.swing.JButton pick_from;
     private javax.swing.JButton pick_to;
     private javax.swing.JButton reserve_room;
-    private javax.swing.JTextField rooms;
+    private javax.swing.JTextField rooms_no;
     private javax.swing.JCheckBox smoking;
+    private javax.swing.JComboBox<String> status_combo;
     private javax.swing.JLabel to;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,16 @@
+	agent n	from hotel  
+    Welcome you sir  
+******************************
+                              
+   You stayed:  days
+   Booked Room:  
+  Capacity of Room: 
+			     
+******************************
+   This will cost you: $   
+    After tax 5%:  
+******************************
+   We hope you enjoyed	     
+   with Accommodation        
+   Thank You! for your trust  
+******************************

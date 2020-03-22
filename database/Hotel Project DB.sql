@@ -11,7 +11,7 @@ CREATE TABLE Agents (
   `name` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `safety question` varchar(255) NOT NULL,
-  `type` enum('Admin','Non_Approved','Approved') NOT NULL
+  `type` enum('Admin','Non-Approved','Approved') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -23,7 +23,7 @@ CREATE TABLE Guests (
   `name` varchar(100) NOT NULL,
   `address` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
-  `register_date` date DEFAULT NULL
+  `register_date` date DEFAULT current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -33,10 +33,9 @@ CREATE TABLE Guests (
 CREATE TABLE Hotel (
   `hotel_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY ,
   `name` varchar(100) NOT NULL,
-  `addres` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
   `Total_floors#` int not null,
-  `Total_rooms#` int not null,
-  `Total_smoke#` int not null
+  `Total_rooms#` int not null
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
@@ -48,9 +47,10 @@ CREATE TABLE Rooms (
     `hotel` INT NOT NULL,
     `room#` INT NOT NULL,
     `floor#` INT NOT NULL,
-    `smoke` TINYINT(1) UNSIGNED NOT NULL,
-    `capacity` ENUM('Individual', 'Double Room', 'Three Guests') NOT NULL,
+    `smoke` TINYINT(1) NOT NULL,
+    `capacity` ENUM('Individual', 'Double Room', 'Triple Room','Family Room') NOT NULL,
     `status` ENUM('Idle', 'Full', 'Hold') NOT NULL default 'Idle',
+    `cost` double not null,
     PRIMARY KEY (`room_id`),
     FOREIGN KEY (`hotel`)
         REFERENCES Hotel (`hotel_id`)
@@ -79,9 +79,10 @@ CREATE TABLE Booking_Transaction (
     `guest` INT NOT NULL,
     `agent` INT NOT NULL,
     `bookedroom` INT NOT NULL,
-    `from` DATETIME NOT NULL,
-    `to` DATETIME NOT NULL,
+    `from` Date NOT NULL,
+    `to` Date NOT NULL,
     `status` ENUM('Confirmed', 'Cancled', 'On Use', 'Ending') NOT NULL,
+    `cost` double not null,
     FOREIGN KEY (`hotel`)
         REFERENCES Hotel (`hotel_id`),
     FOREIGN KEY (`bookedroom`)

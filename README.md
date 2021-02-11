@@ -1,5 +1,5 @@
 # Simple-Hotel-Management-System
-Simple neatbeans project. to link database, gui and controller with each other
+Simple desktop  java project. to link database, gui and controller with each other
 
 <p>
 <div>You can login into the system.</div>
